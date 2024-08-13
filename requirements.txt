@@ -1,0 +1,32 @@
+# Librerie per il machine learning e l'intelligenza artificiale
+torch==2.0.1
+torchvision==0.15.2
+transformers==4.31.0
+
+# Elaborazione di immagini
+Pillow==9.5.0
+
+# Elaborazione di testo e NLP
+nltk==3.8.1
+spacy==3.5.2
+
+# Librerie per la manipolazione dei file
+numpy==1.24.4
+pandas==2.0.3
+
+# OCR (Riconoscimento ottico dei caratteri)
+pytesseract==0.3.10
+
+# Librerie per la gestione degli audio
+librosa==0.10.1
+soundfile==0.12.1
+
+# Test e validazione
+pytest==7.4.0
+
+# Utilità varie
+scikit-learn==1.3.0
+tqdm==4.65.0
+
+# Librerie per Docker (facoltative, se necessarie)
+docker==6.1.3
