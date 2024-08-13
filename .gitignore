@@ -1,0 +1,115 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+*.env
+*.venv
+*.envrc
+.env
+.venv/
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.log
+*.sqlite3
+*.dat
+*.db
+*.bak
+
+# Docker
+*.log
+*.tmp
+*.pid
+*.bak
+**/.Dockerfile.swp
+docker-compose.override.yml
+logs/
+tmp/
+.dockerignore
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+*.venv
+.venv/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Data files
+input_files/
+output_files/
+
+# Models
+models/*.pth
+models/*.h5
+models/*.onnx
+models/*.pb
+models/model_architecture.json
+
+# Testing
+.tox/
+.nox/
+.coverage
+coverage.*
+.cache
+pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+!.pytest_cache/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/contentModel.xml
+.idea/**/modules.xml
+.idea/**/vcs.xml
+.idea/**/actionProfiles.xml
+.idea/**/misc.xml
+.idea/**/path.macros.xml
+.idea/**/inspectionProfiles/
+.idea/**/gradle.xml
+.idea/**/structureSettings.xml
+.idea/**/watcherTasks.xml
+.idea/**/webServers.xml
+.idea/**/editor.xml
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
