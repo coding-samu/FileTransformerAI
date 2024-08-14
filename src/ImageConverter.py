@@ -5,7 +5,6 @@ from model_architecture import ImageModel
 
 class better_image:
     def __init__(self):
-        # Carica un modello pre-addestrato (ad esempio, un modello di super risoluzione)
         self.model = ImageModel()
         self.model.load_state_dict(torch.load('models/trained_model.pth'))
         self.model.eval()
