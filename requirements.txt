@@ -9,7 +9,6 @@ datasets
 
 # Elaborazione di immagini
 Pillow
-timm
 
 # Elaborazione di testo e NLP
 nltk
