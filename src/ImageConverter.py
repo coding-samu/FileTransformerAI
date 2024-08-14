@@ -3,7 +3,7 @@ import torch
 from torchvision import transforms
 from model_architecture import ImageModel
 
-class ImageConverter:
+class better_image:
     def __init__(self):
         # Carica un modello pre-addestrato (ad esempio, un modello di super risoluzione)
         self.model = ImageModel()

@@ -1,10 +1,10 @@
-from traduzione_en_to_fr import TextConverter
-from better_image import ImageConverter
+from TextConverter import translation_en_to_fr
+from ImageConverter import better_image
 
 def get_converter(conversion_type):
     if conversion_type == "text_en_to_fr":
-        return TextConverter()
+        return translation_en_to_fr()
     elif conversion_type == "better_image":
-        return ImageConverter()
+        return better_image()
     else:
         return None
