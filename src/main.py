@@ -9,7 +9,7 @@ def main():
             print("Uscita dal programma.")
             break
 
-        conversion_type = input("Inserisci il tipo di conversione (text_en_to_fr, text_en_to_de, better_image): ")
+        conversion_type = input("Inserisci il tipo di conversione (text_en_to_fr, text_en_to_de, text_it_to_en, better_image): ")
 
         # Carica il file di input
         try:

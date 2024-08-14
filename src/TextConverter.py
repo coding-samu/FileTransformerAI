@@ -36,6 +36,24 @@ class translation_en_to_de:
         
         return translated_text
 
+class translation_it_to_en:
+    def __init__(self):
+        # Inizializza il tokenizer e il modello per la traduzione italiano-inglese
+        self.tokenizer = MarianTokenizer.from_pretrained("Helsinki-NLP/opus-mt-it-en")
+        self.model = MarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-it-en")
+
+    def convert(self, input_text):
+        # Tokenizza il testo di input
+        inputs = self.tokenizer(input_text, return_tensors="pt", padding=True)
+        
+        # Genera la traduzione
+        translated_tokens = self.model.generate(**inputs, max_length=1024)
+        
+        # Decodifica i token generati in testo
+        translated_text = self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
+
+        return translated_text
+
 """    
 class UniversalTranslator:
     def __init__(self, source_lang, target_lang):

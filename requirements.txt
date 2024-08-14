@@ -4,6 +4,7 @@ torchvision==0.15.2
 transformers==4.31.0
 sentencepiece
 protobuf
+opencv-python
 
 # Elaborazione di immagini
 Pillow==9.5.0
