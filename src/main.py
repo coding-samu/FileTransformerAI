@@ -1,4 +1,4 @@
-from utils_translate import translate
+from utils.utils_translate import translate
 
 def main():
     t = None

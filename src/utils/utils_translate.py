@@ -1,5 +1,5 @@
-from utils_file import load_file_txt, save_file_txt
-from ai_model_translate import UniversalTranslator
+from utils.utils_file import load_file_txt, save_file_txt
+from ai_model.ai_model_translate import UniversalTranslator
 
 def get_translate_model(source_lang, target_lang):
     try:
