@@ -1,4 +1,4 @@
-from TextConverter import UniversalTranslator
+from translate import UniversalTranslator
 
 def get_converter(conversion_type):
     if conversion_type == "text_en_to_fr":
