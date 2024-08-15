@@ -7,7 +7,7 @@ def main():
         if input_file == 'exit':
             break
 
-        conversion_type = input("Inserisci il tipo di conversione (translate, pdf, jpg, png, docx, xlsx): ")
+        conversion_type = input("Inserisci il tipo di conversione (translate, pdf, jpg, png, docx, xlsx, audio): ")
 
         match conversion_type:
             case "translate":
@@ -26,6 +26,9 @@ def main():
                 continue
             case "xlsx":
                 print("Conversione XLSX non ancora supportata.")
+                continue
+            case "audio":
+                print("Conversione audio non ancora supportata.")
                 continue
             case _:
                 print("Tipo di conversione non supportato.")
