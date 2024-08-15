@@ -10,3 +10,7 @@ def get_audio_model(conversion_type):
             print("Tipo di conversione non supportato.")
             return None
         
+def choose_lang():
+    print("Seleziona la lingua:")
+    lang = input()
+    return lang
