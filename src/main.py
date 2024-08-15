@@ -7,11 +7,14 @@ def main():
         if input_file == 'exit':
             break
 
-        conversion_type = input("Inserisci il tipo di conversione (translate): ")
+        conversion_type = input("Inserisci il tipo di conversione (translate, pdf): ")
 
         match conversion_type:
             case "translate":
                 translate(input_file)
+            case "pdf":
+                print("Conversione PDF non ancora supportata.")
+                continue
             case _:
                 print("Tipo di conversione non supportato.")
                 continue
