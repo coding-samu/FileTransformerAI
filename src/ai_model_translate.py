@@ -1,8 +1,22 @@
-from translate import UniversalTranslator
+from transformers import MarianMTModel, MarianTokenizer
 
-def get_translate_model(source_lang, target_lang):
-    try:
-        return UniversalTranslator(source_lang, target_lang)
-    except Exception as e:
-        print(f"Non è presente un modello per la conversione da {source_lang} a {target_lang}.")
-        return None
+class UniversalTranslator:
+    def __init__(self, source_lang, target_lang):
+        # Costruisci il nome della pipeline di traduzione
+        translation_task = f"Helsinki-NLP/opus-mt-{source_lang}-{target_lang}"
+
+        # Inizializza il tokenizer e il modello per la traduzione italiano-inglese
+        self.tokenizer = MarianTokenizer.from_pretrained(translation_task)
+        self.model = MarianMTModel.from_pretrained(translation_task)
+
+    def convert(self, input_text):
+        # Tokenizza il testo di input
+        inputs = self.tokenizer(input_text, return_tensors="pt", padding=True)
+        
+        # Genera la traduzione
+        translated_tokens = self.model.generate(**inputs, max_length=1024)
+        
+        # Decodifica i token generati in testo
+        translated_text = self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
+
+        return translated_text
