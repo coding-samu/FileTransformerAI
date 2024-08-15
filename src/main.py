@@ -7,7 +7,7 @@ def main():
         if input_file == 'exit':
             break
 
-        conversion_type = input("Inserisci il tipo di conversione (translate, pdf, jpg, png, docx, xlsx, audio): ")
+        conversion_type = input("Inserisci il tipo di conversione o il tipo di file da convertire (translate, pdf, jpg, png, docx, xlsx, audio): ")
 
         match conversion_type:
             case "translate":
