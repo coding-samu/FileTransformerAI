@@ -1,4 +1,5 @@
 from utils.utils_translate import translate
+from utils.utils_pdf import pdf
 
 def main():
     t = None

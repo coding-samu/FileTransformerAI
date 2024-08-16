@@ -1,8 +1,10 @@
-def get_pdf_model(conversion_type):
+from utils.utils_file import save_file_pdf
+from ai_model.ai_model_pdf import PDFOCR
+
+def get_pdf_model(conversion_type, input_file):
     match conversion_type:
         case "pdf_with_ocr":
-            print("Conversione PDF non ancora supportata.")
-            return None
+            pdf_to_ocr(input_file)
         case "jpg":
             print("Conversione JPG non ancora supportata.")
             return None
@@ -30,3 +32,20 @@ def get_pdf_model(conversion_type):
         case _:
             print("Tipo di conversione non supportato.")
             return None
+
+def get_type_conversion():
+    print("Inserisci il tipo di conversione o il tipo di file da convertire (pdf_with_ocr, jpg, png, docx, xlsx, txt, svg, compress, txt_summary): ")
+    return input()
+
+def pdf_to_ocr(input_file):
+    try:
+        pdf_ocr = PDFOCR()
+        pdf_writer = pdf_ocr.convert(f'input_files/{input_file}', f'output_files/({input_file}_ocr)')
+        save_file_pdf(pdf_writer, f'output_files/({input_file}_ocr)')
+        print(f"Salvataggio completato!")
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+
+def pdf(input_file):
+    conversion_type = get_type_conversion()
+    get_pdf_model(conversion_type, input_file)
