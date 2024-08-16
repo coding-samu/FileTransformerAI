@@ -21,6 +21,9 @@ pandas
 # OCR (Riconoscimento ottico dei caratteri)
 pytesseract
 
+# Librerie per la manipolazione dei file PDF
+PyPDF2
+
 # Librerie per la gestione degli audio
 librosa
 soundfile
