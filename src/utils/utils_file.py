@@ -1,3 +1,5 @@
+from PyPDF2 import PdfReader, PdfWriter
+
 def load_file_txt(file_path):
     # verifica che l'estensione del file sia .txt
     if not file_path.endswith('.txt'):
@@ -20,4 +22,16 @@ def save_file_txt(data, file_path):
             file.write(data)
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
+        return None
+    
+def load_file_pdf(file_path):
+    # verifica che l'estensione del file sia .pdf
+    if not file_path.endswith('.pdf'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    try:
+        reader = PdfReader(file_path)
+        return reader
+    except Exception as e:
+        print(f"Errore durante il caricamento del file {file_path}: {e}")
         return None
