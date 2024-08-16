@@ -5,6 +5,9 @@ FROM python:3.10-slim
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglib2.0-0 \
+    poppler-utils \
+    tesseract-ocr \
+    tesseract-ocr-ita \
     && rm -rf /var/lib/apt/lists/*
 
 # Imposta la directory di lavoro

@@ -37,9 +37,11 @@ def load_file_pdf(file_path):
         return None
     
 def save_file_pdf(pdf_writer, file_path):
-    # verifica che l'estensione del file sia .pdf
     if not file_path.endswith('.pdf'):
         print(f"Estensione del file {file_path} non supportata.")
+        return None
+    if pdf_writer is None:
+        print(f"Errore: il pdf_writer è None, non posso salvare il file.")
         return None
     try:
         with open(file_path, 'wb') as file:

@@ -1,55 +1,59 @@
-from transformers import TrOCRProcessor, VisionEncoderDecoderModel
+import pytesseract
 from pdf2image import convert_from_path
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfWriter, PdfReader
 import io
+import os
+import tempfile
 from PIL import Image
 
 class PDFOCR:
     def __init__(self):
-        # Inizializza il processore e il modello TrOCR
-        self.processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten')
-        self.model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-base-handwritten')
+        # Imposta il percorso dell'eseguibile Tesseract
+        pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
 
-    def process_page(self, image):
-        # Converte l'immagine in input in formato adatto al modello TrOCR
-        pixel_values = self.processor(images=image, return_tensors="pt").pixel_values
-        
-        # Genera il testo utilizzando il modello
-        generated_ids = self.model.generate(pixel_values)
-        generated_text = self.processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
-        return generated_text
+    def perform_ocr(self, image):
+        # Esegui l'OCR sull'immagine e restituisci il testo
+        text = pytesseract.image_to_string(image)
+        return text
 
-    def convert(self, input_pdf_path, output_pdf_path):
-        # Estrae le immagini da ciascuna pagina del PDF
-        images = convert_from_path(input_pdf_path)
+    def convert(self, input_pdf_path):
+        try:
+            # Estrai le immagini da ciascuna pagina del PDF
+            images = convert_from_path(input_pdf_path)
 
-        # Crea un buffer PDF per il salvataggio temporaneo delle immagini con il testo OCR
-        pdf_writer = PdfWriter()
+            # Crea un oggetto PdfWriter
+            pdf_writer = PdfWriter()
 
-        for i, image in enumerate(images):
-            # Esegue OCR sulla pagina corrente
-            ocr_text = self.process_page(image)
+            for i, image in enumerate(images):
+                # Esegui OCR sulla pagina corrente
+                ocr_text = self.perform_ocr(image)
 
-            # Crea una pagina PDF con l'immagine e il testo OCR
-            packet = io.BytesIO()
-            can = canvas.Canvas(packet, pagesize=letter)
-            
-            # Aggiunge l'immagine della pagina
-            img_buffer = io.BytesIO()
-            image.save(img_buffer, format="JPEG")
-            img_buffer.seek(0)
-            can.drawImage(img_buffer, 0, 0, width=letter[0], height=letter[1])
-            
-            # Aggiunge il testo OCR
-            can.setFont("Helvetica", 10)
-            can.drawString(10, 10, ocr_text)
-            can.save()
+                # Crea una pagina PDF con il solo testo OCR
+                packet = io.BytesIO()
+                can = canvas.Canvas(packet, pagesize=letter)
 
-            # Unisce l'immagine con il testo OCR al PDF originale
-            packet.seek(0)
-            new_pdf = PdfReader(packet)
-            pdf_writer.add_page(new_pdf.pages[0])
+                # Aggiungi il testo OCR al PDF
+                can.setFont("Helvetica", 10)
+                text_lines = ocr_text.split('\n')
+                y = letter[1] - 20  # Partiamo dal bordo superiore della pagina
 
-        return pdf_writer
+                for line in text_lines:
+                    can.drawString(10, y, line)
+                    y -= 12  # Spostiamo verso il basso per la prossima riga
+
+                can.save()
+
+                # Sposta il puntatore all'inizio del buffer
+                packet.seek(0)
+
+                # Aggiungi il contenuto generato al PdfWriter
+                new_pdf = PdfReader(packet)
+                pdf_writer.add_page(new_pdf.pages[0])
+
+            return pdf_writer
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
+            return None

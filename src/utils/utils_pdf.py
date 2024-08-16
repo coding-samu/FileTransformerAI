@@ -40,8 +40,8 @@ def get_type_conversion():
 def pdf_to_ocr(input_file):
     try:
         pdf_ocr = PDFOCR()
-        pdf_writer = pdf_ocr.convert(f'input_files/{input_file}', f'output_files/({input_file}_ocr)')
-        save_file_pdf(pdf_writer, f'output_files/({input_file}_ocr)')
+        pdf_writer = pdf_ocr.convert(f'input_files/{input_file}')
+        save_file_pdf(pdf_writer, f'output_files/ocr_{input_file}')
         print(f"Salvataggio completato!")
     except Exception as e:
         print(f"Errore durante la conversione del file {input_file}: {e}")
