@@ -14,8 +14,7 @@ def main():
             case "translate":
                 translate(input_file)
             case "pdf":
-                print("Conversione PDF non ancora supportata.")
-                continue
+                pdf(input_file)
             case "jpg":
                 print("Conversione JPG non ancora supportata.")
                 continue

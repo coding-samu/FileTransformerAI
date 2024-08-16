@@ -1,7 +1,10 @@
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from pdf2image import convert_from_path
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from PyPDF2 import PdfWriter, PdfReader
 import io
-from PyPDF2 import PdfWriter
+from PIL import Image
 
 class PDFOCR:
     def __init__(self):
@@ -22,21 +25,31 @@ class PDFOCR:
         # Estrae le immagini da ciascuna pagina del PDF
         images = convert_from_path(input_pdf_path)
 
-        # Crea un nuovo PDF con il testo OCR
+        # Crea un buffer PDF per il salvataggio temporaneo delle immagini con il testo OCR
         pdf_writer = PdfWriter()
 
         for i, image in enumerate(images):
             # Esegue OCR sulla pagina corrente
             ocr_text = self.process_page(image)
+
+            # Crea una pagina PDF con l'immagine e il testo OCR
+            packet = io.BytesIO()
+            can = canvas.Canvas(packet, pagesize=letter)
             
-            # Salva la pagina originale in un buffer
+            # Aggiunge l'immagine della pagina
             img_buffer = io.BytesIO()
             image.save(img_buffer, format="JPEG")
             img_buffer.seek(0)
-            img_pdf = PdfReader(io.BytesIO(img_buffer.getvalue())).pages[0]
+            can.drawImage(img_buffer, 0, 0, width=letter[0], height=letter[1])
+            
+            # Aggiunge il testo OCR
+            can.setFont("Helvetica", 10)
+            can.drawString(10, 10, ocr_text)
+            can.save()
 
-            # Aggiungi il testo OCR come metadati della pagina
-            img_pdf.add_text(ocr_text)
-            pdf_writer.add_page(img_pdf)
-        
+            # Unisce l'immagine con il testo OCR al PDF originale
+            packet.seek(0)
+            new_pdf = PdfReader(packet)
+            pdf_writer.add_page(new_pdf.pages[0])
+
         return pdf_writer

@@ -24,6 +24,7 @@ pytesseract
 # Librerie per la manipolazione dei file PDF
 PyPDF2
 pdf2image
+reportlab
 
 # Librerie per la gestione degli audio
 librosa
@@ -36,5 +37,5 @@ pytest
 scikit-learn
 tqdm
 
-# Librerie per Docker (facoltative, se necessarie)
+# Librerie per Docker
 docker
