@@ -35,3 +35,18 @@ def load_file_pdf(file_path):
     except Exception as e:
         print(f"Errore durante il caricamento del file {file_path}: {e}")
         return None
+    
+def save_file_pdf(data, file_path):
+    # verifica che l'estensione del file sia .pdf
+    if not file_path.endswith('.pdf'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    try:
+        writer = PdfWriter()
+        for page in data.pages:
+            writer.add_page(page)
+        with open(file_path, 'wb') as file:
+            writer.write(file)
+    except Exception as e:
+        print(f"Errore durante il salvataggio del file {file_path}: {e}")
+        return None
