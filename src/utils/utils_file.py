@@ -73,3 +73,15 @@ def save_file_jpg(data, file_path):
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
         return None
+    
+def load_file_png(file_path):
+    # verifica che l'estensione del file sia .png
+    if not file_path.endswith('.png'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    try:
+        with open(file_path, 'rb') as file:
+            return file.read()
+    except Exception as e:
+        print(f"Errore durante il caricamento del file {file_path}: {e}")
+        return None
