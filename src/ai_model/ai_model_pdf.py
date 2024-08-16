@@ -1,9 +1,7 @@
-import torch
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from pdf2image import convert_from_path
-from PIL import Image
 import io
-from PyPDF2 import PdfWriter, PdfReader
+from PyPDF2 import PdfWriter
 
 class PDFOCR:
     def __init__(self):

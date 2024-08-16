@@ -23,6 +23,7 @@ pytesseract
 
 # Librerie per la manipolazione dei file PDF
 PyPDF2
+pdf2image
 
 # Librerie per la gestione degli audio
 librosa
