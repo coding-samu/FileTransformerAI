@@ -146,4 +146,23 @@ def load_file_xlsx(file_path):
     except Exception as e:
         print(f"Errore durante la lettura del file {file_path}: {e}")
         return None
-    
+
+def save_file_xlsx(data, file_path):
+    # verifica che l'estensione del file sia .xlsx
+    if not file_path.endswith('.xlsx'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    if data is None:
+        print(f"Errore: data è None, non posso salvare il file.")
+        return None
+    try:
+        workbook = openpyxl.Workbook()
+        sheet = workbook.active
+
+        for row in data:
+            sheet.append(row)
+
+        workbook.save(file_path)
+        print(f"File salvato come {file_path}")
+    except Exception as e:
+        print(f"Errore durante il salvataggio del file {file_path}: {e}")
