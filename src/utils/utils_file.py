@@ -114,3 +114,17 @@ def load_file_docx(file_path):
     except Exception as e:
         print(f"Errore durante la lettura del file {file_path}: {e}")
         return None
+    
+def save_file_docx(data, file_path):
+    # verifica che l'estensione del file sia .docx
+    if not file_path.endswith('.docx'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    try:
+        doc = Document()
+        for line in data.split('\n'):
+            doc.add_paragraph(line)
+        doc.save(file_path)
+        print(f"File salvato come {file_path}")
+    except Exception as e:
+        print(f"Errore durante il salvataggio del file {file_path}: {e}")
