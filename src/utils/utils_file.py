@@ -1,4 +1,6 @@
 from PyPDF2 import PdfReader, PdfWriter
+from docx import Document
+import openpyxl
 
 def load_file_txt(file_path):
     # verifica che l'estensione del file sia .txt

@@ -13,6 +13,8 @@ Pillow
 # Elaborazione di testo e NLP
 nltk
 spacy
+python-docx
+openpyxl
 
 # Librerie per la manipolazione dei file
 numpy
