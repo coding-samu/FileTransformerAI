@@ -99,3 +99,18 @@ def save_file_png(data, file_path):
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
         return None
+    
+def load_file_docx(file_path):
+    # verifica che l'estensione del file sia .docx
+    if not file_path.endswith('.docx'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    try:
+        doc = Document(file_path)
+        full_text = []
+        for paragraph in doc.paragraphs:
+            full_text.append(paragraph.text)
+        return '\n'.join(full_text)
+    except Exception as e:
+        print(f"Errore durante la lettura del file {file_path}: {e}")
+        return None
