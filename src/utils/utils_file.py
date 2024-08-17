@@ -128,3 +128,22 @@ def save_file_docx(data, file_path):
         print(f"File salvato come {file_path}")
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
+
+def load_file_xlsx(file_path):
+    # verifica che l'estensione del file sia .xlsx
+    if not file_path.endswith('.xlsx'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    try:
+        workbook = openpyxl.load_workbook(file_path)
+        sheet = workbook.active
+        data = []
+
+        for row in sheet.iter_rows(values_only=True):
+            data.append(list(row))
+
+        return data
+    except Exception as e:
+        print(f"Errore durante la lettura del file {file_path}: {e}")
+        return None
+    
