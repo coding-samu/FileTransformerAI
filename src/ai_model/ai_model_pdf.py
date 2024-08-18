@@ -57,3 +57,27 @@ class PDFOCR:
         except Exception as e:
             print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
             return None
+        
+class PDFDOCX:
+    pass #TODO: implementare la conversione da PDF a DOCX
+
+class PDFJPG:
+    pass #TODO: implementare la conversione da PDF a JPG
+
+class PDFPNG:
+    pass #TODO: implementare la conversione da PDF a PNG
+
+class PDFXLSX:
+    pass #TODO: implementare la conversione da PDF a XLSX
+
+class PDFTXT:
+    pass #TODO: implementare la conversione da PDF a TXT
+
+class PDFSVG:
+    pass #TODO: implementare la conversione da PDF a SVG
+
+class PDFCOMPRESS:
+    pass #TODO: implementare la compressione di un PDF
+
+class PDFTXTSUMMARY:
+    pass #TODO: implementare la generazione di un riassunto di un PDF
