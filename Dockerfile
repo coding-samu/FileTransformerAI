@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     poppler-utils \
     tesseract-ocr \
     tesseract-ocr-ita \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # Imposta la directory di lavoro

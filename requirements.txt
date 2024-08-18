@@ -31,6 +31,7 @@ reportlab
 # Librerie per la gestione degli audio
 librosa
 soundfile
+pydub
 
 # Test e validazione
 pytest
