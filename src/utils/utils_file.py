@@ -167,3 +167,15 @@ def save_file_xlsx(data, file_path):
         print(f"File salvato come {file_path}")
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
+
+def load_file_mp3(file_path):
+    # verifica che l'estensione del file sia .mp3
+    if not file_path.endswith('.mp3'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    try:
+        audio = AudioSegment.from_mp3(file_path)
+        return audio
+    except Exception as e:
+        print(f"Errore durante la lettura del file {file_path}: {e}")
+        return None
