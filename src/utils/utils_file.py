@@ -179,3 +179,15 @@ def load_file_mp3(file_path):
     except Exception as e:
         print(f"Errore durante la lettura del file {file_path}: {e}")
         return None
+    
+def save_file_mp3(audio, file_path):
+    # verifica che l'estensione del file sia .mp3
+    if not file_path.endswith('.mp3'):
+        print(f"Estensione del file {file_path} non supportata.")
+        return None
+    try:
+        audio.export(file_path, format='mp3')
+        print(f"File salvato come {file_path}")
+    except Exception as e:
+        print(f"Errore durante il salvataggio del file {file_path}: {e}")
+        return None
