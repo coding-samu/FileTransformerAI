@@ -78,8 +78,13 @@ def pdf_compress(input_file):
     # TODO: implementare la compressione di un PDF
 
 def pdf_txt_summary(input_file):
-    print("Riassunto non ancora supportato.")
-    # TODO: implementare la generazione di un riassunto di un PDF
+    try:
+        pdf_txt_summary = PDFTXTSUMMARY()
+        summary = pdf_txt_summary.summarize(f'input_files/{input_file}')
+        save_file_txt(summary, f'output_files/summary_{input_file}.txt')
+        print(f"Salvataggio completato!")
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
 
 def pdf(input_file):
     conversion_type = get_type_conversion()

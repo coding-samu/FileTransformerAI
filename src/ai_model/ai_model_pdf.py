@@ -1,4 +1,5 @@
 import pytesseract
+from transformers import pipeline
 from pdf2image import convert_from_path
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -102,7 +103,17 @@ class PDFCOMPRESS:
     pass #TODO: implementare la compressione di un PDF
 
 class PDFTXTSUMMARY:
-    pass #TODO: implementare la generazione di un riassunto di un PDF
+    def __init__(self):
+        # Inizializza il modello di riassunto usando Hugging Face's pipeline
+        self.summarizer = pipeline("summarization")
+
+    def summarize(self, input_pdf_path):
+        # Estrai il testo dal PDF
+        pdf_reader = PdfReader(input_pdf_path)
+        extractor = PDFTextExtractor()
+        text = extractor.extract_text(pdf_reader)
+        summary = self.summarizer(text)
+        return summary[0]['summary_text']
 
 class PDFTextExtractor:
     def __init__(self):
