@@ -50,7 +50,7 @@ def pdf_to_docx(input_file):
     try:
         pdf_docx = PDFDOCX()
         txt = pdf_docx.convert(f'input_files/{input_file}')
-        save_file_docx(txt, f'output_files/docx_{input_file}')
+        save_file_docx(txt, f'output_files/{input_file}.docx')
         print(f"Salvataggio completato!")
     except Exception as e:
         print(f"Errore durante la conversione del file {input_file}: {e}")
