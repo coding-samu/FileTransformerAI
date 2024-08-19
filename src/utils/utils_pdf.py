@@ -1,5 +1,5 @@
 from utils.utils_file import save_file_pdf
-from ai_model.ai_model_pdf import PDFOCR
+from ai_model.ai_model_pdf import PDFOCR, PDFTextExtractor
 
 def get_pdf_model(conversion_type, input_file):
     match conversion_type:
@@ -28,6 +28,20 @@ def get_pdf_model(conversion_type, input_file):
 def get_type_conversion():
     print("Inserisci il tipo di conversione o il tipo di file da convertire (ocr, jpg, png, docx, xlsx, txt, svg, compress, txt_summary): ")
     return input()
+
+def extract_text(pdf_reader):
+    try:
+        extracted_text = ""
+
+        # Itera attraverso tutte le pagine del PDF
+        for page_num in range(len(pdf_reader.pages)):
+            page = pdf_reader.pages[page_num]
+            extracted_text += page.extract_text() + "\n"
+
+        return extracted_text
+    except Exception as e:
+        print(f"Errore durante l'estrazione del testo dal PDF: {e}")
+        return None
 
 def pdf_to_ocr(input_file):
     try:
