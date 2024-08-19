@@ -1,5 +1,5 @@
 from utils.utils_file import save_file_pdf
-from ai_model.ai_model_pdf import PDFOCR, PDFTextExtractor
+from ai_model.ai_model_pdf import PDFOCR, PDFDOCX, PDFJPG, PDFPNG, PDFXLSX, PDFTXT, PDFSVG, PDFCOMPRESS, PDFTXTSUMMARY
 
 def get_pdf_model(conversion_type, input_file):
     match conversion_type:
