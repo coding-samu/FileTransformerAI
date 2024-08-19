@@ -1,4 +1,4 @@
-from utils.utils_file import save_file_pdf
+from utils.utils_file import save_file_pdf, save_file_docx
 from ai_model.ai_model_pdf import PDFOCR, PDFDOCX, PDFJPG, PDFPNG, PDFXLSX, PDFTXT, PDFSVG, PDFCOMPRESS, PDFTXTSUMMARY
 
 def get_pdf_model(conversion_type, input_file):
@@ -29,20 +29,6 @@ def get_type_conversion():
     print("Inserisci il tipo di conversione o il tipo di file da convertire (ocr, jpg, png, docx, xlsx, txt, svg, compress, txt_summary): ")
     return input()
 
-def extract_text(pdf_reader):
-    try:
-        extracted_text = ""
-
-        # Itera attraverso tutte le pagine del PDF
-        for page_num in range(len(pdf_reader.pages)):
-            page = pdf_reader.pages[page_num]
-            extracted_text += page.extract_text() + "\n"
-
-        return extracted_text
-    except Exception as e:
-        print(f"Errore durante l'estrazione del testo dal PDF: {e}")
-        return None
-
 def pdf_to_ocr(input_file):
     try:
         pdf_ocr = PDFOCR()
@@ -61,8 +47,14 @@ def pdf_to_png(input_file):
     # TODO: implementare la conversione da PDF a PNG
 
 def pdf_to_docx(input_file):
-    print("Conversione DOCX non ancora supportata.")
-    # TODO: implementare la conversione da PDF a DOCX
+    try:
+        pdf_docx = PDFDOCX()
+        txt = pdf_docx.convert(f'input_files/{input_file}')
+        save_file_docx(txt, f'output_files/docx_{input_file}')
+        print(f"Salvataggio completato!")
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+
 
 def pdf_to_xlsx(input_file):
     print("Conversione XLSX non ancora supportata.")
