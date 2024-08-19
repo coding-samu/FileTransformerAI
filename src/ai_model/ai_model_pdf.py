@@ -59,7 +59,18 @@ class PDFOCR:
             return None
         
 class PDFDOCX:
-    pass #TODO: implementare la conversione da PDF a DOCX
+    def __init__(self):
+        pass
+
+    def convert(self, input_pdf_path):
+        try:
+            # Crea un oggetto PdfReader
+            pdf_reader = PdfReader(input_pdf_path)
+            extractor = PDFTextExtractor()
+            return extractor.extract_text(pdf_reader)
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
+            return None
 
 class PDFJPG:
     pass #TODO: implementare la conversione da PDF a JPG
@@ -81,3 +92,21 @@ class PDFCOMPRESS:
 
 class PDFTXTSUMMARY:
     pass #TODO: implementare la generazione di un riassunto di un PDF
+
+class PDFTextExtractor:
+    def __init__(self):
+        pass
+
+    def extract_text(self, pdf_reader):
+        try:
+            extracted_text = ""
+
+            # Itera attraverso tutte le pagine del PDF
+            for page_num in range(len(pdf_reader.pages)):
+                page = pdf_reader.pages[page_num]
+                extracted_text += page.extract_text() + "\n"
+
+            return extracted_text
+        except Exception as e:
+            print(f"Errore durante l'estrazione del testo dal PDF: {e}")
+            return None
