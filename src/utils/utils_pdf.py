@@ -74,8 +74,12 @@ def pdf_to_svg(input_file):
     # TODO: implementare la conversione da PDF a SVG
 
 def pdf_compress(input_file):
-    print("Compressione PDF non ancora supportata.")
-    # TODO: implementare la compressione di un PDF
+    try:
+        pdf_compress = PDFCOMPRESS()
+        pdf_compress.compress(f'input_files/{input_file}', f'output_files/compressed_{input_file}')
+        print(f"Salvataggio completato!")
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
 
 def pdf_txt_summary(input_file):
     try:

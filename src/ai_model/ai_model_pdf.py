@@ -8,6 +8,7 @@ import io
 import os
 import tempfile
 from PIL import Image
+import subprocess
 
 class PDFOCR:
     def __init__(self):
@@ -100,7 +101,19 @@ class PDFSVG:
     pass #TODO: implementare la conversione da PDF a SVG
 
 class PDFCOMPRESS:
-    pass #TODO: implementare la compressione di un PDF
+    def __init__(self):
+        pass
+
+    def compress(self, input_pdf_path, output_pdf_path):
+        try:
+            subprocess.call([
+                'gs', '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
+                '-dPDFSETTINGS=/screen', '-dNOPAUSE', '-dQUIET', '-dBATCH',
+                f'-sOutputFile={output_pdf_path}', input_pdf_path
+            ])
+        except Exception as e:
+            print(f"Errore durante la compressione del file {input_pdf_path}: {e}")
+            return None
 
 class PDFTXTSUMMARY:
     def __init__(self):
