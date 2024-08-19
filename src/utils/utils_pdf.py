@@ -1,4 +1,4 @@
-from utils.utils_file import save_file_pdf, save_file_docx
+from utils.utils_file import save_file_pdf, save_file_docx, save_file_txt
 from ai_model.ai_model_pdf import PDFOCR, PDFDOCX, PDFJPG, PDFPNG, PDFXLSX, PDFTXT, PDFSVG, PDFCOMPRESS, PDFTXTSUMMARY
 
 def get_pdf_model(conversion_type, input_file):
@@ -61,8 +61,13 @@ def pdf_to_xlsx(input_file):
     # TODO: implementare la conversione da PDF a XLSX
 
 def pdf_to_txt(input_file):
-    print("Conversione txt non ancora supportata.")
-    # TODO: implementare la conversione da PDF a TXT
+    try:
+        pdf_txt = PDFTXT()
+        txt = pdf_txt.convert(f'input_files/{input_file}')
+        save_file_txt(txt, f'output_files/{input_file}.txt')
+        print(f"Salvataggio completato!")
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
 
 def pdf_to_svg(input_file):
     print("Conversione SVG non ancora supportata.")

@@ -82,7 +82,18 @@ class PDFXLSX:
     pass #TODO: implementare la conversione da PDF a XLSX
 
 class PDFTXT:
-    pass #TODO: implementare la conversione da PDF a TXT
+    def __init__(self):
+        pass
+
+    def convert(self, input_pdf_path):
+        try:
+            # Crea un oggetto PdfReader
+            pdf_reader = PdfReader(input_pdf_path)
+            extractor = PDFTextExtractor()
+            return extractor.extract_text(pdf_reader)
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
+            return None
 
 class PDFSVG:
     pass #TODO: implementare la conversione da PDF a SVG
