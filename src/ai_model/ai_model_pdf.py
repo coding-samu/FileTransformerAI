@@ -101,7 +101,27 @@ class PDFJPG:
             return 1
 
 class PDFPNG:
-    pass #TODO: implementare la conversione da PDF a PNG
+    def __init__(self):
+        pass
+
+    def convert_to_png(self, input_pdf_path, page_number=1, quality=95):
+        try:
+            input_pdf = PdfReader(input_pdf_path)
+            if page_number < 1 or page_number > len(PdfReader(input_pdf.pages)):
+                raise ValueError(f"Numero di pagina non valido: {page_number}")
+            # Converte la pagina specificata del PDF in un'immagine PIL
+            images = convert_from_path(input_pdf_path, first_page=page_number, last_page=page_number)
+            if images:
+                # Salva l'immagine in un buffer temporaneo come PNG
+                img_byte_arr = io.BytesIO()
+                images[0].save(img_byte_arr, format='PNG', quality=quality)
+                # Restituisce i dati dell'immagine
+                return img_byte_arr.getvalue()
+            else:
+                raise Exception(f"Errore durante la conversione della pagina {page_number} del file {input_pdf_path}")
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
+            return 1
 
 class PDFXLSX:
     pass #TODO: implementare la conversione da PDF a XLSX
