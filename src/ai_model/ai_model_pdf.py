@@ -85,7 +85,7 @@ class PDFJPG:
     def convert(self, input_pdf_path, output_jpg_path, page_number=1, quality=95):
         try:
             input_pdf = PdfReader(input_pdf_path)
-            if page_number < 1 or page_number > len(PdfReader(input_pdf.pages)):
+            if page_number < 1 or page_number > len(input_pdf.pages):
                 raise ValueError(f"Numero di pagina non valido: {page_number}")
             # Converte la pagina specificata del PDF in un'immagine PIL
             images = convert_from_path(input_pdf_path, first_page=page_number, last_page=page_number)
@@ -113,7 +113,7 @@ class PDFPNG:
     def convert(self, input_pdf_path, output_png_path, page_number=1, quality=95):
         try:
             input_pdf = PdfReader(input_pdf_path)
-            if page_number < 1 or page_number > len(PdfReader(input_pdf.pages)):
+            if page_number < 1 or page_number > len(input_pdf.pages):
                 raise ValueError(f"Numero di pagina non valido: {page_number}")
             # Converte la pagina specificata del PDF in un'immagine PIL
             images = convert_from_path(input_pdf_path, first_page=page_number, last_page=page_number)
