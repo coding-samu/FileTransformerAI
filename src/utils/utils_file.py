@@ -7,105 +7,109 @@ def load_file_txt(file_path):
     # verifica che l'estensione del file sia .txt
     if not file_path.endswith('.txt'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             return file.read()
     except Exception as e:
         print(f"Errore durante il caricamento del file {file_path}: {e}")
-        return None
+        return 1
 
 def save_file_txt(data, file_path):
     # verifica che l'estensione del file sia .txt
     if not file_path.endswith('.txt'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(data)
+        return 0
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
-        return None
+        return 1
     
 def load_file_pdf(file_path):
     # verifica che l'estensione del file sia .pdf
     if not file_path.endswith('.pdf'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         reader = PdfReader(file_path)
         return reader
     except Exception as e:
         print(f"Errore durante il caricamento del file {file_path}: {e}")
-        return None
+        return 1
     
 def save_file_pdf(pdf_writer, file_path):
     if not file_path.endswith('.pdf'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     if pdf_writer is None:
         print(f"Errore: il pdf_writer è None, non posso salvare il file.")
-        return None
+        return 1
     try:
         with open(file_path, 'wb') as file:
             pdf_writer.write(file)
+        return 0
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
-        return None
+        return 1
     
 def load_file_jpg(file_path):
     # verifica che l'estensione del file sia .jpg
     if not file_path.endswith('.jpg'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         with open(file_path, 'rb') as file:
             return file.read()
     except Exception as e:
         print(f"Errore durante il caricamento del file {file_path}: {e}")
-        return None
+        return 1
     
 def save_file_jpg(data, file_path):
     # verifica che l'estensione del file sia .jpg
     if not file_path.endswith('.jpg'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         with open(file_path, 'wb') as file:
             file.write(data)
+        return 0
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
-        return None
+        return 1
     
 def load_file_png(file_path):
     # verifica che l'estensione del file sia .png
     if not file_path.endswith('.png'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         with open(file_path, 'rb') as file:
             return file.read()
     except Exception as e:
         print(f"Errore durante il caricamento del file {file_path}: {e}")
-        return None
+        return 1
     
 def save_file_png(data, file_path):
     # verifica che l'estensione del file sia .png
     if not file_path.endswith('.png'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         with open(file_path, 'wb') as file:
             file.write(data)
+        return 0
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
-        return None
+        return 1
     
 def load_file_docx(file_path):
     # verifica che l'estensione del file sia .docx
     if not file_path.endswith('.docx'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         doc = Document(file_path)
         full_text = []
@@ -114,27 +118,29 @@ def load_file_docx(file_path):
         return '\n'.join(full_text)
     except Exception as e:
         print(f"Errore durante la lettura del file {file_path}: {e}")
-        return None
+        return 1
     
 def save_file_docx(data, file_path):
     # verifica che l'estensione del file sia .docx
     if not file_path.endswith('.docx'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         doc = Document()
         for line in data.split('\n'):
             doc.add_paragraph(line)
         doc.save(file_path)
         print(f"File salvato come {file_path}")
+        return 0
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
+        return 1
 
 def load_file_xlsx(file_path):
     # verifica che l'estensione del file sia .xlsx
     if not file_path.endswith('.xlsx'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         workbook = openpyxl.load_workbook(file_path)
         sheet = workbook.active
@@ -146,16 +152,16 @@ def load_file_xlsx(file_path):
         return data
     except Exception as e:
         print(f"Errore durante la lettura del file {file_path}: {e}")
-        return None
+        return 1
 
 def save_file_xlsx(data, file_path):
     # verifica che l'estensione del file sia .xlsx
     if not file_path.endswith('.xlsx'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     if data is None:
         print(f"Errore: data è None, non posso salvare il file.")
-        return None
+        return 1
     try:
         workbook = openpyxl.Workbook()
         sheet = workbook.active
@@ -165,29 +171,32 @@ def save_file_xlsx(data, file_path):
 
         workbook.save(file_path)
         print(f"File salvato come {file_path}")
+        return 0
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
+        return 1
 
 def load_file_mp3(file_path):
     # verifica che l'estensione del file sia .mp3
     if not file_path.endswith('.mp3'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         audio = AudioSegment.from_mp3(file_path)
         return audio
     except Exception as e:
         print(f"Errore durante la lettura del file {file_path}: {e}")
-        return None
+        return 1
     
 def save_file_mp3(audio, file_path):
     # verifica che l'estensione del file sia .mp3
     if not file_path.endswith('.mp3'):
         print(f"Estensione del file {file_path} non supportata.")
-        return None
+        return 1
     try:
         audio.export(file_path, format='mp3')
         print(f"File salvato come {file_path}")
+        return 0
     except Exception as e:
         print(f"Errore durante il salvataggio del file {file_path}: {e}")
-        return None
+        return 1

@@ -95,7 +95,7 @@ class PDFTXT:
             return extractor.extract_text(pdf_reader)
         except Exception as e:
             print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
-            return None
+            return 1
 
 class PDFSVG:
     def __init__(self):
@@ -125,9 +125,10 @@ class PDFCOMPRESS:
                 '-dPDFSETTINGS=/screen', '-dNOPAUSE', '-dQUIET', '-dBATCH',
                 f'-sOutputFile={output_pdf_path}', input_pdf_path
             ])
+            return 0
         except Exception as e:
             print(f"Errore durante la compressione del file {input_pdf_path}: {e}")
-            return None
+            return 1
 
 class PDFTXTSUMMARY:
     def __init__(self):
@@ -135,12 +136,18 @@ class PDFTXTSUMMARY:
         self.summarizer = pipeline("summarization")
 
     def summarize(self, input_pdf_path):
-        # Estrai il testo dal PDF
-        pdf_reader = PdfReader(input_pdf_path)
-        extractor = PDFTextExtractor()
-        text = extractor.extract_text(pdf_reader)
-        summary = self.summarizer(text)
-        return summary[0]['summary_text']
+        try:
+            # Estrai il testo dal PDF
+            pdf_reader = PdfReader(input_pdf_path)
+            extractor = PDFTextExtractor()
+            text = extractor.extract_text(pdf_reader)
+            if text == 1:
+                raise Exception("Errore durante l'estrazione del testo dal PDF")
+            summary = self.summarizer(text)
+            return summary[0]['summary_text']
+        except Exception as e:
+            print(f"Errore durante la generazione del riassunto del file {input_pdf_path}: {e}")
+            return 1
 
 class PDFTextExtractor:
     def __init__(self):
@@ -158,4 +165,4 @@ class PDFTextExtractor:
             return extracted_text
         except Exception as e:
             print(f"Errore durante l'estrazione del testo dal PDF: {e}")
-            return None
+            return 1

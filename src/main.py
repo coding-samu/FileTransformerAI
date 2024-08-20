@@ -9,12 +9,14 @@ def main():
             break
 
         conversion_type = input("Inserisci il tipo di conversione o il tipo di file da convertire (translate, pdf, jpg, png, docx, xlsx, audio): ")
+        messaggio = f"Conversione {conversion_type} completata con successo!"
+        error = 1
 
         match conversion_type:
             case "translate":
-                translate(input_file)
+                error = translate(input_file)
             case "pdf":
-                pdf(input_file)
+                error = pdf(input_file)
             case "jpg":
                 print("Conversione JPG non ancora supportata.")
                 continue
@@ -33,8 +35,11 @@ def main():
             case _:
                 print("Tipo di conversione non supportato.")
                 continue
-
-        print(f"Conversione {conversion_type} completata con successo!")
+        
+        if error == 0:
+            print(messaggio)
+        else:
+            print("Errore durante la conversione del file.")
 
 if __name__ == "__main__":
     main()
