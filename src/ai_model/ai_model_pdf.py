@@ -69,7 +69,10 @@ class PDFDOCX:
             # Crea un oggetto PdfReader
             pdf_reader = PdfReader(input_pdf_path)
             extractor = PDFTextExtractor()
-            return extractor.extract_text(pdf_reader)
+            text = extractor.extract_text(pdf_reader)
+            if text == 1:
+                raise Exception("Errore durante l'estrazione del testo dal PDF")
+            return text
         except Exception as e:
             print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
             return None
