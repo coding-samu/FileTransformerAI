@@ -43,8 +43,17 @@ def pdf_to_ocr(input_file):
         return 1
 
 def pdf_to_jpg(input_file):
-    print("Conversione JPG non ancora supportata.")
-    # TODO: implementare la conversione da PDF a JPG
+    try:
+        page_number = int(input("Inserisci il numero di pagina da convertire in JPG: "))
+        pdf_jpg = PDFJPG()
+        if pdf_jpg.convert(f'input_files/{input_file}', f'output_files/{input_file}.jpg', page_number) == 0:
+            print(f"Salvataggio completato!")
+        else:
+            raise Exception("Errore durante la conversione del file")
+        return 0
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+        return 1
 
 def pdf_to_png(input_file):
     print("Conversione PNG non ancora supportata.")
