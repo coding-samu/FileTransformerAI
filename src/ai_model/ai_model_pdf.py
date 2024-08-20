@@ -9,7 +9,7 @@ import os
 import tempfile
 from PIL import Image
 import subprocess
-from utils.utils_file import save_file_jpg
+from utils.utils_file import save_file_jpg, save_file_png
 
 class PDFOCR:
     def __init__(self):
@@ -110,7 +110,7 @@ class PDFPNG:
     def __init__(self):
         pass
 
-    def convert_to_png(self, input_pdf_path, page_number=1, quality=95):
+    def convert_to_png(self, input_pdf_path, output_png_path, page_number=1, quality=95):
         try:
             input_pdf = PdfReader(input_pdf_path)
             if page_number < 1 or page_number > len(PdfReader(input_pdf.pages)):
@@ -121,8 +121,13 @@ class PDFPNG:
                 # Salva l'immagine in un buffer temporaneo come PNG
                 img_byte_arr = io.BytesIO()
                 images[0].save(img_byte_arr, format='PNG', quality=quality)
-                # Restituisce i dati dell'immagine
-                return img_byte_arr.getvalue()
+
+                # Salva l'immagine su disco
+                if save_file_png(img_byte_arr.getvalue(), output_png_path) == 0:
+                    print(f"Conversione completata: {output_png_path}")
+                    return 0
+                else:
+                    raise Exception(f"Errore durante il salvataggio dell'immagine {output_png_path}")
             else:
                 raise Exception(f"Errore durante la conversione della pagina {page_number} del file {input_pdf_path}")
         except Exception as e:

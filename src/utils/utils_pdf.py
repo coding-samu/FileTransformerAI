@@ -56,8 +56,17 @@ def pdf_to_jpg(input_file):
         return 1
 
 def pdf_to_png(input_file):
-    print("Conversione PNG non ancora supportata.")
-    # TODO: implementare la conversione da PDF a PNG
+    try:
+        page_number = int(input("Inserisci il numero di pagina da convertire in PNG: "))
+        pdf_png = PDFPNG()
+        if pdf_png.convert(f'input_files/{input_file}', f'output_files/{input_file}.png', page_number) == 0:
+            print(f"Salvataggio completato!")
+        else:
+            raise Exception("Errore durante la conversione del file")
+        return 0
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+        return 1
 
 def pdf_to_docx(input_file):
     try:
