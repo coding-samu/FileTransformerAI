@@ -70,8 +70,15 @@ def pdf_to_txt(input_file):
         print(f"Errore durante la conversione del file {input_file}: {e}")
 
 def pdf_to_svg(input_file):
-    print("Conversione SVG non ancora supportata.")
-    # TODO: implementare la conversione da PDF a SVG
+    try:
+        page_number = int(input("Inserisci il numero di pagina da convertire in SVG: "))
+        pdf_svg = PDFSVG()
+        if pdf_svg.convert_to_svg(f'input_files/{input_file}', f'output_files/{input_file}.svg', page_number) == 0:
+            print(f"Salvataggio completato!")
+        else:
+            raise Exception("Errore durante la conversione del file {input_file}")
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
 
 def pdf_compress(input_file):
     try:

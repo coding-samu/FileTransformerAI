@@ -98,7 +98,21 @@ class PDFTXT:
             return None
 
 class PDFSVG:
-    pass #TODO: implementare la conversione da PDF a SVG
+    def __init__(self):
+        pass
+
+    def convert_to_svg(self, input_pdf_path, output_svg_path, page_number=1):
+        try:
+            pdf = PdfReader(input_pdf_path)
+            if page_number < 1 or page_number > len(pdf.pages):
+                raise ValueError(f"Numero di pagina non valido: {page_number}")
+            command = f"pdf2svg {input_pdf_path} {output_svg_path} {page_number}"
+            os.system(command)
+            print(f"Conversione completata: {output_svg_path}")
+            return 0
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
+            return 1
 
 class PDFCOMPRESS:
     def __init__(self):

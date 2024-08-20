@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr-ita \
     ffmpeg \
     ghostscript \
+    pdf2svg \
     && rm -rf /var/lib/apt/lists/*
 
 # Imposta la directory di lavoro
