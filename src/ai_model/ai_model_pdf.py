@@ -82,7 +82,7 @@ class PDFJPG:
     def __init__(self):
         pass
 
-    def convert_to_jpg(self, input_pdf_path, output_jpg_path, page_number=1, quality=95):
+    def convert(self, input_pdf_path, output_jpg_path, page_number=1, quality=95):
         try:
             input_pdf = PdfReader(input_pdf_path)
             if page_number < 1 or page_number > len(PdfReader(input_pdf.pages)):
@@ -110,7 +110,7 @@ class PDFPNG:
     def __init__(self):
         pass
 
-    def convert_to_png(self, input_pdf_path, output_png_path, page_number=1, quality=95):
+    def convert(self, input_pdf_path, output_png_path, page_number=1, quality=95):
         try:
             input_pdf = PdfReader(input_pdf_path)
             if page_number < 1 or page_number > len(PdfReader(input_pdf.pages)):
