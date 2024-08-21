@@ -83,8 +83,18 @@ def pdf_to_docx(input_file):
 
 
 def pdf_to_xlsx(input_file):
-    print("Conversione XLSX non ancora supportata.")
-    # TODO: implementare la conversione da PDF a XLSX
+    try:
+        page_number = int(input("Inserisci il numero di pagina da convertire in XLSX: "))
+        pdf_xlsx = PDFXLSX()
+        if pdf_xlsx.convert(f'input_files/{input_file}', f'output_files/{input_file}.xlsx', page_number) == 0:
+            print(f"Salvataggio completato!")
+            return 0
+        else:
+            raise Exception("Errore durante la conversione del file")
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+        return 1
+        
 
 def pdf_to_txt(input_file):
     try:
