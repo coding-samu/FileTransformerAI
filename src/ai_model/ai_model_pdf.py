@@ -9,7 +9,10 @@ import os
 import tempfile
 from PIL import Image
 import subprocess
-from utils.utils_file import save_file_jpg, save_file_png
+from utils.utils_file import save_file_jpg, save_file_png, save_file_xlsx
+import pdfplumber
+import pandas as pd
+import openpyxl
 
 class PDFOCR:
     def __init__(self):
@@ -135,7 +138,40 @@ class PDFPNG:
             return 1
 
 class PDFXLSX:
-    pass #TODO: implementare la conversione da PDF a XLSX
+    def __init__(self):
+        pass
+
+    def convert(self, input_pdf_path, output_xlsx_path, page_number=1):
+        try:
+            # Apertura del file PDF con pdfplumber
+            with pdfplumber.open(input_pdf_path) as pdf:
+                if page_number < 1 or page_number > len(pdf.pages):
+                    raise ValueError(f"Numero di pagina non valido: {page_number}")
+
+                # Estrai la pagina specificata
+                page = pdf.pages[page_number - 1]
+
+                # Cerca tabelle nella pagina
+                tables = page.extract_tables()
+
+                if not tables:
+                    raise Exception(f"Nessuna tabella trovata nella pagina {page_number} del file {input_pdf_path}")
+
+                # Converti la prima tabella in un DataFrame pandas
+                data = pd.DataFrame(tables[0])
+
+                # Converte i dati in un elenco di elenchi, adatto a openpyxl
+                data_list = data.values.tolist()
+
+                # Salva i dati come file XLSX
+                if save_file_xlsx(data_list, output_xlsx_path) == 0:
+                    print(f"Conversione completata: {output_xlsx_path}")
+                    return 0
+                else:
+                    raise Exception(f"Errore durante il salvataggio del file XLSX {output_xlsx_path}")
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
+            return 1
 
 class PDFTXT:
     def __init__(self):

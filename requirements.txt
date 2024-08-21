@@ -27,6 +27,10 @@ pytesseract
 PyPDF2
 pdf2image
 reportlab
+pdfplumber
+
+# Librerie per la manipolazione dei file xlsx
+openpyxl
 
 # Librerie per la gestione degli audio
 librosa
