@@ -82,8 +82,7 @@ def docx_to_xlsx(input_file):
 def docx_to_txt(input_file):
     try:
         docx_txt = DOCXTXT()
-        txt = docx_txt.convert(f'input_files/{input_file}')
-        if save_file_txt(txt, f'output_files/{input_file}.txt') == 0:
+        if docx_txt.convert(f'input_files/{input_file}', f'output_files/{input_file}.txt') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -108,8 +107,7 @@ def docx_to_svg(input_file):
 def docx_to_txt_summary(input_file):
     try:
         docx_txt_summary = DOCXTXTSummary()
-        txt = docx_txt_summary.convert(f'input_files/{input_file}')
-        if save_file_txt(txt, f'output_files/{input_file}_summary.txt') == 0:
+        if docx_txt_summary.convert(f'input_files/{input_file}', f'output_files/{input_file}_summary.txt') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
