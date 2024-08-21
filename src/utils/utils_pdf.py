@@ -32,8 +32,7 @@ def get_type_conversion():
 def pdf_to_ocr(input_file):
     try:
         pdf_ocr = PDFOCR()
-        pdf_writer = pdf_ocr.convert(f'input_files/{input_file}')
-        if save_file_pdf(pdf_writer, f'output_files/ocr_{input_file}') == 0:
+        if pdf_ocr.convert(f'input_files/{input_file}', f'output_files/ocr_{input_file}') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -71,8 +70,7 @@ def pdf_to_png(input_file):
 def pdf_to_docx(input_file):
     try:
         pdf_docx = PDFDOCX()
-        txt = pdf_docx.convert(f'input_files/{input_file}')
-        if save_file_docx(txt, f'output_files/{input_file}.docx') == 0:
+        if pdf_docx.convert(f'input_files/{input_file}', f'output_files/{input_file}.docx') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -95,14 +93,10 @@ def pdf_to_xlsx(input_file):
         print(f"Errore durante la conversione del file {input_file}: {e}")
         return 1
         
-
 def pdf_to_txt(input_file):
     try:
         pdf_txt = PDFTXT()
-        txt = pdf_txt.convert(f'input_files/{input_file}')
-        if txt == 1:
-            raise Exception("Errore durante la conversione del file")
-        if save_file_txt(txt, f'output_files/{input_file}.txt') == 0:
+        if pdf_txt.convert(f'input_files/{input_file}',f'output_files/{input_file}.txt') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -139,10 +133,7 @@ def pdf_compress(input_file):
 def pdf_txt_summary(input_file):
     try:
         pdf_txt_summary = PDFTXTSUMMARY()
-        summary = pdf_txt_summary.summarize(f'input_files/{input_file}')
-        if summary == 1:
-            raise Exception("Errore durante la conversione del file")
-        if save_file_txt(summary, f'output_files/summary_{input_file}.txt') == 0:
+        if pdf_txt_summary.summarize(f'input_files/{input_file}', f'output_files/summary_{input_file}.txt') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:

@@ -9,7 +9,7 @@ import os
 import tempfile
 from PIL import Image
 import subprocess
-from utils.utils_file import save_file_jpg, save_file_png, save_file_xlsx
+from utils.utils_file import save_file_jpg, save_file_png, save_file_xlsx, save_file_txt, save_file_pdf, save_file_docx
 import pdfplumber
 import pandas as pd
 import openpyxl
@@ -24,7 +24,7 @@ class PDFOCR:
         text = pytesseract.image_to_string(image)
         return text
 
-    def convert(self, input_pdf_path):
+    def convert(self, input_pdf_path, output_pdf_path):
         try:
             # Estrai le immagini da ciascuna pagina del PDF
             images = convert_from_path(input_pdf_path)
@@ -58,17 +58,21 @@ class PDFOCR:
                 new_pdf = PdfReader(packet)
                 pdf_writer.add_page(new_pdf.pages[0])
 
-            return pdf_writer
-
+            # Salva il PDF con il testo OCR
+            if save_file_pdf(pdf_writer, output_pdf_path) == 0:
+                print(f"Conversione completata: {output_pdf_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file PDF {output_pdf_path}")
         except Exception as e:
             print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
-            return None
+            return 1
         
 class PDFDOCX:
     def __init__(self):
         pass
 
-    def convert(self, input_pdf_path):
+    def convert(self, input_pdf_path, output_docx_path):
         try:
             # Crea un oggetto PdfReader
             pdf_reader = PdfReader(input_pdf_path)
@@ -76,10 +80,15 @@ class PDFDOCX:
             text = extractor.extract_text(pdf_reader)
             if text == 1:
                 raise Exception("Errore durante l'estrazione del testo dal PDF")
-            return text
+            # Salva il testo su disco
+            if save_file_docx(text, output_docx_path) == 0:
+                print(f"Conversione completata: {output_docx_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file DOCX {output_docx_path}")
         except Exception as e:
             print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
-            return None
+            return 1
 
 class PDFJPG:
     def __init__(self):
@@ -177,7 +186,7 @@ class PDFTXT:
     def __init__(self):
         pass
 
-    def convert(self, input_pdf_path):
+    def convert(self, input_pdf_path, output_txt_path):
         try:
             # Crea un oggetto PdfReader
             pdf_reader = PdfReader(input_pdf_path)
@@ -185,7 +194,13 @@ class PDFTXT:
             text = extractor.extract_text(pdf_reader)
             if text == 1:
                 raise Exception("Errore durante l'estrazione del testo dal PDF")
-            return text
+
+            # Salva il testo su disco
+            if save_file_txt(text, output_txt_path) == 0:
+                print(f"Conversione completata: {output_txt_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file TXT {output_txt_path}")
         except Exception as e:
             print(f"Errore durante la conversione del file {input_pdf_path}: {e}")
             return 1
@@ -228,7 +243,7 @@ class PDFTXTSUMMARY:
         # Inizializza il modello di riassunto usando Hugging Face's pipeline
         self.summarizer = pipeline("summarization")
 
-    def summarize(self, input_pdf_path):
+    def summarize(self, input_pdf_path, output_txt_path):
         try:
             # Estrai il testo dal PDF
             pdf_reader = PdfReader(input_pdf_path)
@@ -237,7 +252,12 @@ class PDFTXTSUMMARY:
             if text == 1:
                 raise Exception("Errore durante l'estrazione del testo dal PDF")
             summary = self.summarizer(text)
-            return summary[0]['summary_text']
+            # Salva il riassunto su disco
+            if save_file_txt(summary[0]['summary_text'], output_txt_path) == 0:
+                print(f"Conversione completata: {output_txt_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file TXT {output_txt_path}") 
         except Exception as e:
             print(f"Errore durante la generazione del riassunto del file {input_pdf_path}: {e}")
             return 1
