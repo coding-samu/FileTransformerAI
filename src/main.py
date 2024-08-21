@@ -1,5 +1,6 @@
 from utils.utils_translate import translate
 from utils.utils_pdf import pdf
+from utils.utils_jpg import jpg
 
 def main():
     t = None
@@ -18,8 +19,7 @@ def main():
             case "pdf":
                 error = pdf(input_file)
             case "jpg":
-                print("Conversione JPG non ancora supportata.")
-                continue
+                error = jpg(input_file)
             case "png":
                 print("Conversione PNG non ancora supportata.")
                 continue
