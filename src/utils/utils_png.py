@@ -1,17 +1,16 @@
-def get_png_model(conversion_type):
+from ai_model.ai_model_png import PNGPDF, PNGJPG, PNGTXT
+
+def get_png_model(conversion_type, input_file):
     match conversion_type:
         case "pdf":
-            print("Conversione PDF non ancora supportata.")
-            return None
+            return png_to_pdf(input_file)
         case "jpg":
-            print("Conversione JPG non ancora supportata.")
-            return None
+            return png_to_jpg(input_file)
         case "txt":
-            print("Estrazione del testo in un file txt non ancora supportata.")
-            return None
+            return png_to_txt(input_file)
         case _:
             print("Tipo di conversione non supportato.")
-            return None
+            return 1
         
 def get_type_conversion():
     print("Come desideri convertire il file PNG? (pdf, jpg, txt): ")
@@ -19,7 +18,7 @@ def get_type_conversion():
 
 def png(input_file):
     conversion_type = get_type_conversion()
-    return get_png_model(conversion_type)
+    return get_png_model(conversion_type, input_file)
 
 def png_to_pdf(input_file):
     try:
