@@ -2,6 +2,7 @@ from utils.utils_translate import translate
 from utils.utils_pdf import pdf
 from utils.utils_jpg import jpg
 from utils.utils_png import png
+from utils.utils_docx import docx
 
 def main():
     t = None
@@ -24,8 +25,7 @@ def main():
             case "png":
                 error = png(input_file)
             case "docx":
-                print("Conversione DOCX non ancora supportata.")
-                continue
+                error = docx(input_file)
             case "xlsx":
                 print("Conversione XLSX non ancora supportata.")
                 continue
