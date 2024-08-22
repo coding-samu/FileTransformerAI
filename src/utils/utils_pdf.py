@@ -1,5 +1,6 @@
 from utils.utils_file import save_file_pdf, save_file_docx, save_file_txt
 from ai_model.ai_model_pdf import PDFOCR, PDFDOCX, PDFJPG, PDFPNG, PDFXLSX, PDFTXT, PDFSVG, PDFCOMPRESS, PDFTXTSUMMARY
+import os
 
 def get_pdf_model(conversion_type, input_file):
     match conversion_type:
@@ -32,7 +33,9 @@ def get_type_conversion():
 def pdf_to_ocr(input_file):
     try:
         pdf_ocr = PDFOCR()
-        if pdf_ocr.convert(f'input_files/{input_file}', f'output_files/ocr_{input_file}') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if pdf_ocr.convert(f'input_files/{input_file}', f'output_files/ocr_{base_name}.pdf') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -45,7 +48,9 @@ def pdf_to_jpg(input_file):
     try:
         page_number = int(input("Inserisci il numero di pagina da convertire in JPG: "))
         pdf_jpg = PDFJPG()
-        if pdf_jpg.convert(f'input_files/{input_file}', f'output_files/{input_file}.jpg', page_number) == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if pdf_jpg.convert(f'input_files/{input_file}', f'output_files/{base_name}.jpg', page_number) == 0:
             print(f"Salvataggio completato!")
         else:
             raise Exception("Errore durante la conversione del file")
@@ -58,7 +63,9 @@ def pdf_to_png(input_file):
     try:
         page_number = int(input("Inserisci il numero di pagina da convertire in PNG: "))
         pdf_png = PDFPNG()
-        if pdf_png.convert(f'input_files/{input_file}', f'output_files/{input_file}.png', page_number) == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if pdf_png.convert(f'input_files/{input_file}', f'output_files/{base_name}.png', page_number) == 0:
             print(f"Salvataggio completato!")
         else:
             raise Exception("Errore durante la conversione del file")
@@ -70,7 +77,9 @@ def pdf_to_png(input_file):
 def pdf_to_docx(input_file):
     try:
         pdf_docx = PDFDOCX()
-        if pdf_docx.convert(f'input_files/{input_file}', f'output_files/{input_file}.docx') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if pdf_docx.convert(f'input_files/{input_file}', f'output_files/{base_name}.docx') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -84,7 +93,9 @@ def pdf_to_xlsx(input_file):
     try:
         page_number = int(input("Inserisci il numero di pagina da convertire in XLSX: "))
         pdf_xlsx = PDFXLSX()
-        if pdf_xlsx.convert(f'input_files/{input_file}', f'output_files/{input_file}.xlsx', page_number) == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if pdf_xlsx.convert(f'input_files/{input_file}', f'output_files/{base_name}.xlsx', page_number) == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -96,7 +107,9 @@ def pdf_to_xlsx(input_file):
 def pdf_to_txt(input_file):
     try:
         pdf_txt = PDFTXT()
-        if pdf_txt.convert(f'input_files/{input_file}',f'output_files/{input_file}.txt') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if pdf_txt.convert(f'input_files/{input_file}',f'output_files/{base_name}.txt') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -109,7 +122,9 @@ def pdf_to_svg(input_file):
     try:
         page_number = int(input("Inserisci il numero di pagina da convertire in SVG: "))
         pdf_svg = PDFSVG()
-        if pdf_svg.convert_to_svg(f'input_files/{input_file}', f'output_files/{input_file}.svg', page_number) == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if pdf_svg.convert_to_svg(f'input_files/{input_file}', f'output_files/{base_name}.svg', page_number) == 0:
             print(f"Salvataggio completato!")
         else:
             raise Exception("Errore durante la conversione del file")
@@ -121,7 +136,9 @@ def pdf_to_svg(input_file):
 def pdf_compress(input_file):
     try:
         pdf_compress = PDFCOMPRESS()
-        if pdf_compress.compress(f'input_files/{input_file}', f'output_files/compressed_{input_file}') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if pdf_compress.compress(f'input_files/{input_file}', f'output_files/compressed_{base_name}.pdf') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -133,7 +150,10 @@ def pdf_compress(input_file):
 def pdf_txt_summary(input_file):
     try:
         pdf_txt_summary = PDFTXTSUMMARY()
-        if pdf_txt_summary.summarize(f'input_files/{input_file}', f'output_files/summary_{input_file}.txt') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+
+        if pdf_txt_summary.summarize(f'input_files/{input_file}', f'output_files/summary_{base_name}.txt') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:

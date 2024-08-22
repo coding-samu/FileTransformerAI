@@ -1,5 +1,7 @@
 from ai_model.ai_model_png import PNGPDF, PNGJPG, PNGTXT
 
+import os
+
 def get_png_model(conversion_type, input_file):
     match conversion_type:
         case "pdf":
@@ -23,7 +25,9 @@ def png(input_file):
 def png_to_pdf(input_file):
     try:
         png_pdf = PNGPDF()
-        if png_pdf.convert(f'input_files/{input_file}', f'output_files/{input_file}.pdf') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if png_pdf.convert(f'input_files/{input_file}', f'output_files/{base_name}.pdf') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -35,7 +39,9 @@ def png_to_pdf(input_file):
 def png_to_jpg(input_file):
     try:
         png_jpg = PNGJPG()
-        if png_jpg.convert(f'input_files/{input_file}', f'output_files/{input_file}.jpg') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if png_jpg.convert(f'input_files/{input_file}', f'output_files/{base_name}.jpg') == 0:
             print(f"Salvataggio completato!")
         else:
             raise Exception("Errore durante la conversione del file")
@@ -47,7 +53,9 @@ def png_to_jpg(input_file):
 def png_to_txt(input_file):
     try:
         png_txt = PNGTXT()
-        if png_txt.convert(f'input_files/{input_file}', f'output_files/{input_file}.txt') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if png_txt.convert(f'input_files/{input_file}', f'output_files/{base_name}.txt') == 0:
             print(f"Salvataggio completato!")
         else:
             raise Exception("Errore durante la conversione del file")

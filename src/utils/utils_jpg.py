@@ -1,5 +1,7 @@
 from ai_model.ai_model_jpg import JPGPDF, JPGPNG, JPGTXT
 
+import os
+
 def get_jpg_model(conversion_type, input_file):
     match conversion_type:
         case "pdf":
@@ -19,7 +21,9 @@ def get_type_conversion():
 def jpg_to_pdf(input_file):
     try:
         jpg_pdf = JPGPDF()
-        if jpg_pdf.convert(f'input_files/{input_file}', f'output_files/{input_file}.pdf') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if jpg_pdf.convert(f'input_files/{input_file}', f'output_files/{base_name}.pdf') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
@@ -31,7 +35,9 @@ def jpg_to_pdf(input_file):
 def jpg_to_png(input_file):
     try:
         jpg_png = JPGPNG()
-        if jpg_png.convert(f'input_files/{input_file}', f'output_files/{input_file}.png') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if jpg_png.convert(f'input_files/{input_file}', f'output_files/{base_name}.png') == 0:
             print(f"Salvataggio completato!")
         else:
             raise Exception("Errore durante la conversione del file")
@@ -43,7 +49,9 @@ def jpg_to_png(input_file):
 def jpg_to_txt(input_file):
     try:
         jpg_txt = JPGTXT()
-        if jpg_txt.convert(f'input_files/{input_file}', f'output_files/{input_file}.txt') == 0:
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if jpg_txt.convert(f'input_files/{input_file}', f'output_files/{base_name}.txt') == 0:
             print(f"Salvataggio completato!")
         else:
             raise Exception("Errore durante la conversione del file")
