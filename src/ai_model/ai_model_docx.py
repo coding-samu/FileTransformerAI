@@ -1,5 +1,5 @@
 from utils.utils_file import save_file_jpg, save_file_pdf, save_file_png, save_file_txt, save_file_xlsx
-from ai_model_pdf import PDFJPG, PDFPNG, PDFSVG
+from ai_model.ai_model_pdf import PDFJPG, PDFPNG, PDFSVG
 
 import subprocess
 import os
