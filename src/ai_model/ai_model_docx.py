@@ -56,7 +56,7 @@ class DOCXJPG:
     def convert(self, input_docx_path, output_jpg_path, page_number):
         try:
             # Definisci i nomi temporanei per i file
-            temp_pdf_path = input_docx_path + '.pdf'
+            temp_pdf_path = "temp_file/" + input_docx_path + '.pdf'
             temp_jpg_path = output_jpg_path  # Il percorso finale del JPG
 
             # Converti il DOCX in PDF
@@ -92,7 +92,7 @@ class DOCXPNG:
     def convert(self, input_docx_path, output_png_path, page_number):
         try:
             # Definisci i nomi temporanei per i file
-            temp_pdf_path = input_docx_path + '.pdf'
+            temp_pdf_path = "temp_file/" + input_docx_path + '.pdf'
             temp_png_path = output_png_path  # Il percorso finale del JPG
 
             # Converti il DOCX in PDF
@@ -159,7 +159,7 @@ class DOCXSVG:
     def convert(self, input_docx_path, output_svg_path, page_number):
         try:
             # Definisci i nomi temporanei per i file
-            temp_pdf_path = input_docx_path + '.pdf'
+            temp_pdf_path = "temp_file/" + input_docx_path + '.pdf'
             temp_svg_path = output_svg_path  # Il percorso finale del SVG
 
             # Converti il DOCX in PDF
@@ -167,7 +167,7 @@ class DOCXSVG:
                 raise Exception(f"Errore durante la conversione del file DOCX in PDF: {input_docx_path}")
 
             # Converti il PDF in SVG
-            if self.pdf_to_svg_converter.convert(temp_pdf_path, temp_svg_path, page_number) != 0:
+            if self.pdf_to_svg_converter.convert_to_svg(temp_pdf_path, temp_svg_path, page_number) != 0:
                 raise Exception(f"Errore durante la conversione del file PDF in SVG: {temp_pdf_path}")
 
             print(f"Conversione completata: {output_svg_path}")
