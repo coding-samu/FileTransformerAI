@@ -1,5 +1,5 @@
 from utils.utils_file import save_file_jpg, save_file_pdf, save_file_png, save_file_txt, save_file_xlsx
-from ai_model_pdf import PDFJPG, PDFPNG
+from ai_model_pdf import PDFJPG, PDFPNG, PDFSVG
 
 import subprocess
 import os
@@ -99,7 +99,7 @@ class DOCXPNG:
             if self.docx_to_pdf_converter.convert(input_docx_path, temp_pdf_path) != 0:
                 raise Exception(f"Errore durante la conversione del file DOCX in PDF: {input_docx_path}")
 
-            # Converti il PDF in JPG
+            # Converti il PDF in PNG
             if self.pdf_to_png_converter.convert(temp_pdf_path, temp_png_path, page_number) != 0:
                 raise Exception(f"Errore durante la conversione del file PDF in PNG: {temp_pdf_path}")
 
@@ -151,7 +151,40 @@ class DOCXTXT:
             return 1
 
 class DOCXSVG:
-    pass # TODO: implementare la conversione da DOCX a SVG
+    def __init__(self):
+        # Inizializza le classi per la conversione DOCX -> PDF e PDF -> SVG
+        self.docx_to_pdf_converter = DOCXPDF()
+        self.pdf_to_svg_converter = PDFSVG()
+
+    def convert(self, input_docx_path, output_svg_path, page_number):
+        try:
+            # Definisci i nomi temporanei per i file
+            temp_pdf_path = input_docx_path + '.pdf'
+            temp_svg_path = output_svg_path  # Il percorso finale del SVG
+
+            # Converti il DOCX in PDF
+            if self.docx_to_pdf_converter.convert(input_docx_path, temp_pdf_path) != 0:
+                raise Exception(f"Errore durante la conversione del file DOCX in PDF: {input_docx_path}")
+
+            # Converti il PDF in SVG
+            if self.pdf_to_svg_converter.convert(temp_pdf_path, temp_svg_path, page_number) != 0:
+                raise Exception(f"Errore durante la conversione del file PDF in SVG: {temp_pdf_path}")
+
+            print(f"Conversione completata: {output_svg_path}")
+            return 0
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_docx_path}: {e}")
+            return 1
+        
+        finally:
+            # Rimuove il file PDF temporaneo se esiste
+            if os.path.exists(temp_pdf_path):
+                try:
+                    os.remove(temp_pdf_path)
+                    print(f"File PDF temporaneo rimosso: {temp_pdf_path}")
+                except Exception as e:
+                    print(f"Errore durante la rimozione del file PDF temporaneo: {e}")
 
 class DOCXTXTSummary:
     def __init__(self):
