@@ -1,4 +1,5 @@
 from utils.utils_file import save_file_jpg, save_file_pdf, save_file_png, save_file_txt, save_file_xlsx
+from ai_model_pdf import PDFJPG
 
 import subprocess
 import os
@@ -47,7 +48,40 @@ class DOCXPDF:
             return 1
 
 class DOCXJPG:
-    pass # TODO: implementare la conversione da DOCX a JPG
+    def __init__(self):
+        # Inizializza le classi per la conversione DOCX -> PDF e PDF -> JPG
+        self.docx_to_pdf_converter = DOCXPDF()
+        self.pdf_to_jpg_converter = PDFJPG()
+
+    def convert(self, input_docx_path, output_jpg_path, page_number):
+        try:
+            # Definisci i nomi temporanei per i file
+            temp_pdf_path = input_docx_path + '.pdf'
+            temp_jpg_path = output_jpg_path  # Il percorso finale del JPG
+
+            # Converti il DOCX in PDF
+            if self.docx_to_pdf_converter.convert(input_docx_path, temp_pdf_path) != 0:
+                raise Exception(f"Errore durante la conversione del file DOCX in PDF: {input_docx_path}")
+
+            # Converti il PDF in JPG
+            if self.pdf_to_jpg_converter.convert(temp_pdf_path, temp_jpg_path, page_number) != 0:
+                raise Exception(f"Errore durante la conversione del file PDF in JPG: {temp_pdf_path}")
+
+            print(f"Conversione completata: {output_jpg_path}")
+            return 0
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_docx_path}: {e}")
+            return 1
+        
+        finally:
+            # Rimuove il file PDF temporaneo se esiste
+            if os.path.exists(temp_pdf_path):
+                try:
+                    os.remove(temp_pdf_path)
+                    print(f"File PDF temporaneo rimosso: {temp_pdf_path}")
+                except Exception as e:
+                    print(f"Errore durante la rimozione del file PDF temporaneo: {e}")
 
 class DOCXPNG:
     pass # TODO: implementare la conversione da DOCX a PNG
