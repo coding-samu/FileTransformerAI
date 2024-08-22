@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     ghostscript \
     pdf2svg \
+    libreoffice \
     && rm -rf /var/lib/apt/lists/*
 
 # Imposta la directory di lavoro
