@@ -3,6 +3,8 @@ from utils.utils_file import save_file_jpg, save_file_pdf, save_file_png, save_f
 import subprocess
 import os
 
+from docx import Document
+
 class DOCXPDF:
     def __init__(self):
         pass
@@ -52,7 +54,32 @@ class DOCXXLSX:
     pass # TODO: implementare la conversione da DOCX a XLSX
 
 class DOCXTXT:
-    pass # TODO: implementare la conversione da DOCX a TXT
+    def __init__(self):
+        pass
+
+    def convert(self, input_docx_path, output_txt_path):
+        try:
+            # Carica il file DOCX
+            document = Document(input_docx_path)
+
+            # Estrai il testo dal file DOCX
+            full_text = []
+            for paragraph in document.paragraphs:
+                full_text.append(paragraph.text)
+
+            # Combina il testo in un'unica stringa separata da nuove linee
+            text = "\n".join(full_text)
+
+            # Salva il testo estratto nel file TXT
+            if save_file_txt(text, output_txt_path) == 0:
+                print(f"Conversione completata: {output_txt_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file TXT: {output_txt_path}")
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_docx_path}: {e}")
+            return 1
 
 class DOCXSVG:
     pass # TODO: implementare la conversione da DOCX a SVG
