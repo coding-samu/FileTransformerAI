@@ -94,7 +94,7 @@ class DOCXPNG:
         try:
             # Definisci i nomi temporanei per i file
             temp_pdf_path = "temp_file/" + input_docx_path + '.pdf'
-            temp_png_path = output_png_path  # Il percorso finale del JPG
+            temp_png_path = output_png_path  # Il percorso finale del PNG
 
             # Converti il DOCX in PDF
             if self.docx_to_pdf_converter.convert(input_docx_path, temp_pdf_path) != 0:
