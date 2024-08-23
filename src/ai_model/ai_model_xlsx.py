@@ -122,4 +122,37 @@ class XLSXTXT:
     pass
 
 class XLSXSVG:
-    pass
+    def __init__(self):
+        # Inizializza le classi per la conversione XLSX -> PDF e PDF -> SVG
+        self.xlsx_to_pdf_converter = XLSXPDF()
+        self.pdf_to_svg_converter = PDFSVG()
+
+    def convert(self, input_xlsx_path, output_svg_path, page_number):
+        try:
+            # Definisci i nomi temporanei per i file
+            temp_pdf_path = "temp_file/" + input_xlsx_path + '.pdf'
+            temp_svg_path = output_svg_path  # Il percorso finale del SVG
+
+            # Converti il XLSX in PDF
+            if self.xlsx_to_pdf_converter.convert(input_xlsx_path, temp_pdf_path) != 0:
+                raise Exception(f"Errore durante la conversione del file XLSX in PDF: {input_xlsx_path}")
+
+            # Converti il PDF in SVG
+            if self.pdf_to_svg_converter.convert_to_svg(temp_pdf_path, temp_svg_path, page_number) != 0:
+                raise Exception(f"Errore durante la conversione del file PDF in SVG: {temp_pdf_path}")
+
+            print(f"Conversione completata: {output_svg_path}")
+            return 0
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_xlsx_path}: {e}")
+            return 1
+        
+        finally:
+            # Rimuove il file PDF temporaneo se esiste
+            if os.path.exists(temp_pdf_path):
+                try:
+                    os.remove(temp_pdf_path)
+                    print(f"File PDF temporaneo rimosso: {temp_pdf_path}")
+                except Exception as e:
+                    print(f"Errore durante la rimozione del file PDF temporaneo: {e}")
