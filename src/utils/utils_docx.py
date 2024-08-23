@@ -1,4 +1,5 @@
-from ai_model.ai_model_docx import DOCXPDF, DOCXJPG, DOCXPNG, DOCXXLSX, DOCXTXT, DOCXSVG, DOCXTXTSummary
+from ai_model.ai_model_docx import DOCXPDF, DOCXJPG, DOCXPNG, DOCXXLSX, DOCXTXT, DOCXSVG, DOCXTXTSummary, DOCXTranslate
+from utils.utils_translate import get_languages
 
 import os
 
@@ -18,12 +19,14 @@ def get_docx_model(conversion_type, input_file):
             return docx_to_svg(input_file)
         case "txt_summary":
             return docx_to_txt_summary(input_file)
+        case "translate":
+            return docx_translate(input_file)
         case _:
             print("Tipo di conversione non supportato.")
             return None
         
 def get_type_conversion():
-    print("Come desideri convertire il file DOCX? (pdf, jpg, png, xlsx, txt, svg, txt_summary): ")
+    print("Come desideri convertire il file DOCX? (pdf, jpg, png, xlsx, txt, svg, txt_summary, translate): ")
     return input()
 
 def docx(input_file):
@@ -123,6 +126,21 @@ def docx_to_txt_summary(input_file):
         # Rimuovi l'estensione esistente dal file di input
         base_name = os.path.splitext(input_file)[0]
         if docx_txt_summary.convert(f'input_files/{input_file}', f'output_files/{base_name}_summary.txt') == 0:
+            print(f"Salvataggio completato!")
+            return 0
+        else:
+            raise Exception("Errore durante la conversione del file")
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+        return 1
+    
+def docx_translate(input_file):
+    try:
+        T = get_languages()
+        docx_translate = DOCXTranslate(T[0], T[1])
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        if docx_translate.convert(f'input_files/{input_file}', f'output_files/{base_name}_translated.docx') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:

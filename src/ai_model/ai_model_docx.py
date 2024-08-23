@@ -1,5 +1,6 @@
 from utils.utils_file import save_file_txt, save_file_xlsx
 from ai_model.ai_model_pdf import PDFJPG, PDFPNG, PDFSVG
+from ai_model.ai_model_translate import UniversalTranslator
 
 import subprocess
 import os
@@ -253,6 +254,36 @@ class DOCXTXTSummary:
             else:
                 raise Exception(f"Errore durante il salvataggio del file TXT: {output_txt_path}")
 
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_docx_path}: {e}")
+            return 1
+        
+class DOCXTranslate:
+    def __init__(self, source_lang, target_lang):
+        translator = UniversalTranslator(source_lang, target_lang)
+
+    def convert(self, input_docx_path, output_docx_path):
+        try:
+            # Carica il file DOCX
+            document = Document(input_docx_path)
+
+            # Estrai il testo dal file DOCX
+            full_text = []
+            for paragraph in document.paragraphs:
+                full_text.append(paragraph.text)
+
+            # Combina il testo in un'unica stringa separata da nuove linee
+            text = "\n".join(full_text)
+
+            # Traduci il testo
+            translated_text = self.translator.convert(text)
+
+            # Salva il testo tradotto nel file DOCX
+            if save_file_txt(translated_text, output_docx_path) == 0:
+                print(f"Traduzione completata e salvata in: {output_docx_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file DOCX: {output_docx_path}")
         except Exception as e:
             print(f"Errore durante la conversione del file {input_docx_path}: {e}")
             return 1

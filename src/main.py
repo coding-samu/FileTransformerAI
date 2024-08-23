@@ -1,4 +1,3 @@
-from utils.utils_translate import translate
 from utils.utils_pdf import pdf
 from utils.utils_jpg import jpg
 from utils.utils_png import png
@@ -10,14 +9,17 @@ def main():
         input_file = input("Inserisci il nome del file di input (o 'exit' per uscire): ")
         if input_file == 'exit':
             break
+        
+        # Estrai l'estensione del file
+        conversion_type = input_file.split('.')[-1]
 
-        conversion_type = input("Inserisci il tipo di conversione o il tipo di file da convertire (translate, pdf, jpg, png, docx, xlsx, audio): ")
-        messaggio = f"Conversione {conversion_type} completata con successo!"
+        messaggio = f"Conversione del file {conversion_type} completata con successo!"
         error = 1
 
         match conversion_type:
-            case "translate":
-                error = translate(input_file)
+            case "txt":
+                print("Conversione TXT non ancora supportata.")
+                continue # TODO: Implementare la conversione di file TXT
             case "pdf":
                 error = pdf(input_file)
             case "jpg":
@@ -28,10 +30,10 @@ def main():
                 error = docx(input_file)
             case "xlsx":
                 print("Conversione XLSX non ancora supportata.")
-                continue
+                continue # TODO: Implementare la conversione di file XLSX
             case "audio":
                 print("Conversione audio non ancora supportata.")
-                continue
+                continue # TODO: Implementare la conversione di file audio
             case _:
                 print("Tipo di conversione non supportato.")
                 continue
