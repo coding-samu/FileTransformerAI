@@ -25,7 +25,7 @@ class TXTTranslate:
             if text == 1:
                 raise Exception(f"Errore durante il caricamento del file TXT: {input_txt_path}")
             translated_text = self.translator.convert(text)
-            if save_file_txt(translated_text, f'output_files/{input_txt_path}') == 0:
+            if save_file_txt(translated_text, output_txt_path) == 0:
                 print(f"Salvataggio completato!")
                 return 0
             else:
