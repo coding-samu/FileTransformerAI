@@ -102,10 +102,11 @@ def xlsx_to_txt(input_file):
     
 def xlsx_to_svg(input_file):
     try:
+        page_number = int(input("Inserisci il numero di pagina da convertire in SVG: "))
         xlsx_svg = XLSXSVG()
         # Rimuovi l'estensione esistente dal file di input
         base_name = os.path.splitext(input_file)[0]
-        if xlsx_svg.convert(f'input_files/{input_file}', f'output_files/{base_name}.svg') == 0:
+        if xlsx_svg.convert(f'input_files/{input_file}', f'output_files/{base_name}.svg', page_number) == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
