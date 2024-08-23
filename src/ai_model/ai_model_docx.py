@@ -120,7 +120,32 @@ class DOCXPNG:
                     print(f"Errore durante la rimozione del file PDF temporaneo: {e}")
 
 class DOCXXLSX:
-    pass # TODO: implementare la conversione da DOCX a XLSX
+    def __init__(self):
+        pass
+
+    def convert(self, input_docx_path, output_xlsx_path):
+        try:
+            # Carica il documento DOCX
+            document = Document(input_docx_path)
+
+            # Crea una lista di righe da inserire nel file XLSX
+            data = []
+
+            # Itera sui paragrafi del documento DOCX e aggiungi ogni paragrafo come una riga della lista
+            for paragraph in document.paragraphs:
+                # Aggiungi il testo del paragrafo come una lista (anche se è una singola cella)
+                data.append([paragraph.text])
+
+            # Salva i dati nel file XLSX utilizzando la funzione save_file_xlsx
+            if save_file_xlsx(data, output_xlsx_path) == 0:
+                print(f"Conversione completata: {output_xlsx_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file XLSX: {output_xlsx_path}")
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_docx_path}: {e}")
+            return 1
 
 class DOCXTXT:
     def __init__(self):
