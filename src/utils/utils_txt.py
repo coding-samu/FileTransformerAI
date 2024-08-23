@@ -1,6 +1,8 @@
 from ai_model.ai_model_txt import TXTPDF, TXTJPG, TXTPNG, TXTDOCX, TXTSpeech, TXTTranslate
 from utils.utils_translate import get_languages
 
+import os
+
 def get_txt_model(conversion_type, input_file):
     match conversion_type:
         case "pdf":
