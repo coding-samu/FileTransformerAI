@@ -97,8 +97,10 @@ def txt_to_speech(input_file):
 def txt_to_translate(input_file):
     try:
         source_lang, target_lang = get_languages()
-        txt_translate = TXTTranslate()
-        txt_translate.convert(f'input_files/{input_file}', source_lang, target_lang)
+        txt_translate = TXTTranslate(source_lang, target_lang)
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        txt_translate.convert(f'input_files/{input_file}', f'output_files/{base_name}.txt')
         return 0
     except Exception as e:
         print(f"Errore durante la conversione del file {input_file}: {e}")
