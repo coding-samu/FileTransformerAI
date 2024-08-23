@@ -80,7 +80,40 @@ class XLSXJPG:
                     print(f"Errore durante la rimozione del file PDF temporaneo: {e}")
 
 class XLSXPNG:
-    pass
+    def __init__(self):
+        # Inizializza le classi per la conversione XLSX -> PDF e PDF -> PNG
+        self.xlsx_to_pdf_converter = XLSXPDF()
+        self.pdf_to_png_converter = PDFPNG()
+
+    def convert(self, input_xlsx_path, output_png_path, page_number):
+        try:
+            # Definisci i nomi temporanei per i file
+            temp_pdf_path = "temp_file/" + input_xlsx_path + '.pdf'
+            temp_png_path = output_png_path  # Il percorso finale del PNG
+
+            # Converti il XLSX in PDF
+            if self.xlsx_to_pdf_converter.convert(input_xlsx_path, temp_pdf_path) != 0:
+                raise Exception(f"Errore durante la conversione del file XLSX in PDF: {input_xlsx_path}")
+
+            # Converti il PDF in PNG
+            if self.pdf_to_png_converter.convert(temp_pdf_path, temp_png_path, page_number) != 0:
+                raise Exception(f"Errore durante la conversione del file PDF in PNG: {temp_pdf_path}")
+
+            print(f"Conversione completata: {output_png_path}")
+            return 0
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_xlsx_path}: {e}")
+            return 1
+        
+        finally:
+            # Rimuove il file PDF temporaneo se esiste
+            if os.path.exists(temp_pdf_path):
+                try:
+                    os.remove(temp_pdf_path)
+                    print(f"File PDF temporaneo rimosso: {temp_pdf_path}")
+                except Exception as e:
+                    print(f"Errore durante la rimozione del file PDF temporaneo: {e}")
 
 class XLSXDOCX:
     pass
