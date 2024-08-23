@@ -116,10 +116,10 @@ class XLSXPNG:
                     print(f"Errore durante la rimozione del file PDF temporaneo: {e}")
 
 class XLSXDOCX:
-    pass
+    pass # TODO: Implementare la conversione XLSX -> DOCX
 
 class XLSXTXT:
-    pass
+    pass # TODO: Implementare la conversione XLSX -> TXT
 
 class XLSXSVG:
     def __init__(self):
