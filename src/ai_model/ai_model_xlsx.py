@@ -1,4 +1,4 @@
-from utils.utils_file import save_file_docx, save_file_txt, save_file_pdf
+from utils.utils_file import save_file_docx, save_file_txt
 from ai_model.ai_model_pdf import PDFPNG, PDFJPG, PDFSVG
 
 import os
@@ -151,7 +151,37 @@ class XLSXDOCX:
             return 1
 
 class XLSXTXT:
-    pass # TODO: Implementare la conversione XLSX -> TXT
+    def __init__(self):
+        pass
+
+    def convert(self, input_xlsx_path, output_txt_path):
+        try:
+            # Carica il file XLSX
+            workbook = load_workbook(input_xlsx_path)
+            sheet = workbook.active
+
+            # Prepara i dati come stringa, con ogni riga separata da una nuova linea
+            txt_content = []
+
+            # Itera su ogni riga del foglio di lavoro XLSX
+            for row in sheet.iter_rows(values_only=True):
+                # Unisci i valori della riga in un'unica stringa separata da spazi
+                line = " ".join([str(cell) if cell is not None else "" for cell in row])
+                txt_content.append(line)
+
+            # Unisci tutte le righe in una singola stringa con newline tra di loro
+            txt_data = "\n".join(txt_content)
+
+            # Salva i dati nel file TXT
+            if save_file_txt(txt_data, output_txt_path) == 0:
+                print(f"Conversione completata: {output_txt_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file TXT: {output_txt_path}")
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_xlsx_path}: {e}")
+            return 1
 
 class XLSXSVG:
     def __init__(self):
