@@ -1,3 +1,4 @@
+from utils.utils_txt import txt
 from utils.utils_pdf import pdf
 from utils.utils_jpg import jpg
 from utils.utils_png import png
@@ -18,8 +19,7 @@ def main():
 
         match conversion_type:
             case "txt":
-                print("Conversione TXT non ancora supportata.")
-                continue # TODO: Implementare la conversione di file TXT
+                error = txt(input_file)
             case "pdf":
                 error = pdf(input_file)
             case "jpg":
