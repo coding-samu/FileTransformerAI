@@ -1,4 +1,4 @@
-from utils.utils_file import save_file_txt, save_file_xlsx
+from utils.utils_file import save_file_txt, save_file_xlsx, save_file_docx
 from ai_model.ai_model_pdf import PDFJPG, PDFPNG, PDFSVG
 from ai_model.ai_model_translate import UniversalTranslator
 
@@ -260,7 +260,7 @@ class DOCXTXTSummary:
         
 class DOCXTranslate:
     def __init__(self, source_lang, target_lang):
-        translator = UniversalTranslator(source_lang, target_lang)
+        self.translator = UniversalTranslator(source_lang, target_lang)
 
     def convert(self, input_docx_path, output_docx_path):
         try:
@@ -279,7 +279,7 @@ class DOCXTranslate:
             translated_text = self.translator.convert(text)
 
             # Salva il testo tradotto nel file DOCX
-            if save_file_txt(translated_text, output_docx_path) == 0:
+            if save_file_docx(translated_text, output_docx_path) == 0:
                 print(f"Traduzione completata e salvata in: {output_docx_path}")
                 return 0
             else:
