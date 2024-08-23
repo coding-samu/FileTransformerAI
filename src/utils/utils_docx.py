@@ -76,11 +76,10 @@ def docx_to_png(input_file):
     
 def docx_to_xlsx(input_file):
     try:
-        page_number = int(input("Inserisci il numero di pagina da convertire in XLSX: "))
         docx_xlsx = DOCXXLSX()
         # Rimuovi l'estensione esistente dal file di input
         base_name = os.path.splitext(input_file)[0]
-        if docx_xlsx.convert(f'input_files/{input_file}', f'output_files/{base_name}.xlsx', page_number) == 0:
+        if docx_xlsx.convert(f'input_files/{input_file}', f'output_files/{base_name}.xlsx') == 0:
             print(f"Salvataggio completato!")
             return 0
         else:
