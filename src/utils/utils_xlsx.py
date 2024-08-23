@@ -1,5 +1,7 @@
 from ai_model.ai_model_xlsx import XLSXPDF, XLSXJPG, XLSXPNG, XLSXDOCX, XLSXTXT, XLSXSVG
 
+import os
+
 def get_xlsx_model(conversion_type, input_file):
     match conversion_type:
         case "pdf":
