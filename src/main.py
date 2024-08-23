@@ -2,6 +2,7 @@ from utils.utils_pdf import pdf
 from utils.utils_jpg import jpg
 from utils.utils_png import png
 from utils.utils_docx import docx
+from utils.utils_xlsx import xlsx
 
 def main():
     t = None
@@ -29,8 +30,7 @@ def main():
             case "docx":
                 error = docx(input_file)
             case "xlsx":
-                print("Conversione XLSX non ancora supportata.")
-                continue # TODO: Implementare la conversione di file XLSX
+                error = xlsx(input_file)
             case "audio":
                 print("Conversione audio non ancora supportata.")
                 continue # TODO: Implementare la conversione di file audio
