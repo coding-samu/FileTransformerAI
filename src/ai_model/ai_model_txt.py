@@ -1,19 +1,19 @@
 from ai_model.ai_model_translate import UniversalTranslator
 from utils.utils_file import load_file_txt, save_file_txt
 class TXTPDF:
-    pass
+    pass # TODO: Implementare la conversione di file TXT in PDF
 
 class TXTJPG:
-    pass
+    pass # TODO: Implementare la conversione di file TXT in JPG
 
 class TXTPNG:
-    pass
+    pass # TODO: Implementare la conversione di file TXT in PNG
 
 class TXTDOCX:
-    pass
+    pass # TODO: Implementare la conversione di file TXT in DOCX
 
 class TXTSpeech:
-    pass
+    pass # TODO: Implementare la conversione di file TXT in file audio
 
 class TXTTranslate:
     def __init__(self, source_language, target_language):
@@ -35,10 +35,10 @@ class TXTTranslate:
             return 1
         
 class TXTSummary:
-    pass
+    pass # TODO: Implementare la generazione di riassunti da file TXT
 
 class TXTImageGen:
-    pass
+    pass # TODO: Implementare la generazione di immagini da file TXT
 
 class TXTWrite:
-    pass
+    pass # TODO: Implementare la scrittura di testo in file TXT
