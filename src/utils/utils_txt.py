@@ -1,4 +1,4 @@
-from ai_model.ai_model_txt import TXTPDF, TXTJPG, TXTPNG, TXTDOCX, TXTSpeech, TXTTranslate
+from ai_model.ai_model_txt import TXTPDF, TXTJPG, TXTPNG, TXTDOCX, TXTSpeech, TXTTranslate, TXTSummary, TXTImageGen, TXTWrite
 from utils.utils_translate import get_languages
 
 import os
@@ -17,6 +17,12 @@ def get_txt_model(conversion_type, input_file):
             return txt_to_speech(input_file)
         case "translate":
             return txt_to_translate(input_file)
+        case "summary":
+            return txt_to_summary(input_file)
+        case "imagegen":
+            return txt_to_imagegen(input_file)
+        case "write":
+            return txt_to_write(input_file)
         case _:
             print("Tipo di conversione non supportato.")
             return 1
@@ -101,6 +107,39 @@ def txt_to_translate(input_file):
         # Rimuovi l'estensione esistente dal file di input
         base_name = os.path.splitext(input_file)[0]
         txt_translate.convert(f'input_files/{input_file}', f'output_files/{base_name}.txt')
+        return 0
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+        return 1
+    
+def txt_to_summary(input_file):
+    try:
+        txt_summary = TXTSummary()
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        txt_summary.convert(f'input_files/{input_file}',f'output_files/{base_name}.txt')
+        return 0
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+        return 1
+    
+def txt_to_imagegen(input_file):
+    try:
+        txt_imagegen = TXTImageGen()
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        txt_imagegen.convert(f'input_files/{input_file}',f'output_files/{base_name}.jpg')
+        return 0
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+        return 1
+    
+def txt_to_write(input_file):
+    try:
+        txt_write = TXTWrite()
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        txt_write.convert(f'input_files/{input_file}',f'output_files/{base_name}.txt')
         return 0
     except Exception as e:
         print(f"Errore durante la conversione del file {input_file}: {e}")

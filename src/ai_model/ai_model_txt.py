@@ -33,3 +33,12 @@ class TXTTranslate:
         except Exception as e:
             print(f"Errore durante la conversione del file {input_txt_path}: {e}")
             return 1
+        
+class TXTSummary:
+    pass
+
+class TXTImageGen:
+    pass
+
+class TXTWrite:
+    pass
