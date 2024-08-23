@@ -4,6 +4,8 @@ from ai_model.ai_model_pdf import PDFPNG, PDFJPG, PDFSVG
 import os
 import subprocess
 
+from openpyxl import load_workbook
+
 class XLSXPDF:
     def __init__(self):
         pass
@@ -116,7 +118,37 @@ class XLSXPNG:
                     print(f"Errore durante la rimozione del file PDF temporaneo: {e}")
 
 class XLSXDOCX:
-    pass # TODO: Implementare la conversione XLSX -> DOCX
+    def __init__(self):
+        pass
+
+    def convert(self, input_xlsx_path, output_docx_path):
+        try:
+            # Carica il file XLSX
+            workbook = load_workbook(input_xlsx_path)
+            sheet = workbook.active
+
+            # Prepara i dati come stringa, con ogni riga separata da una nuova linea
+            docx_content = []
+
+            # Itera su ogni riga del foglio di lavoro XLSX
+            for row in sheet.iter_rows(values_only=True):
+                # Unisci i valori della riga in un'unica stringa separata da spazi
+                line = " ".join([str(cell) if cell is not None else "" for cell in row])
+                docx_content.append(line)
+
+            # Unisci tutte le righe in una singola stringa con newline tra di loro
+            docx_data = "\n".join(docx_content)
+
+            # Salva i dati nel file DOCX
+            if save_file_docx(docx_data, output_docx_path) == 0:
+                print(f"Conversione completata: {output_docx_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file DOCX: {output_docx_path}")
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_xlsx_path}: {e}")
+            return 1
 
 class XLSXTXT:
     pass # TODO: Implementare la conversione XLSX -> TXT
