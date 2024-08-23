@@ -23,7 +23,7 @@ def get_docx_model(conversion_type, input_file):
             return docx_translate(input_file)
         case _:
             print("Tipo di conversione non supportato.")
-            return None
+            return 1
         
 def get_type_conversion():
     print("Come desideri convertire il file DOCX? (pdf, jpg, png, xlsx, txt, svg, txt_summary, translate): ")
