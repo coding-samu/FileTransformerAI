@@ -5,7 +5,6 @@ from utils.utils_docx import docx
 from utils.utils_xlsx import xlsx
 
 def main():
-    t = None
     while True:
         input_file = input("Inserisci il nome del file di input (o 'exit' per uscire): ")
         if input_file == 'exit':
