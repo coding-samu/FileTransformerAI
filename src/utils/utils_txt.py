@@ -28,7 +28,7 @@ def get_txt_model(conversion_type, input_file):
             return 1
         
 def get_type_conversion():
-    print("Come desideri convertire il file TXT? (pdf, jpg, png, docx, tts, translate): ")
+    print("Come desideri convertire il file TXT? (pdf, jpg, png, docx, tts, translate, summary, imagegen, write): ")
     return input()
 
 def txt(input_file):
