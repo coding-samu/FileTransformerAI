@@ -43,4 +43,5 @@ def main():
             print("Errore durante la conversione del file.")
 
 if __name__ == "__main__":
+    print("Avvio in corso...")
     main()
