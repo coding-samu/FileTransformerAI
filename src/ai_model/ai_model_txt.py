@@ -1,7 +1,26 @@
 from ai_model.ai_model_translate import UniversalTranslator
-from utils.utils_file import load_file_txt, save_file_txt
+from utils.utils_file import load_file_txt, save_file_txt, save_file_pdf
+from PyPDF2 import PdfReader, PdfWriter
+
 class TXTPDF:
-    pass # TODO: Implementare la conversione di file TXT in PDF
+    def __init__(self):
+        pass
+
+    def convert(self, input_txt_path, output_pdf_path):
+        try:
+            text = load_file_txt(input_txt_path)
+            if text == 1:
+                raise Exception(f"Errore durante il caricamento del file TXT: {input_txt_path}")
+            pdf_writer = PdfWriter()
+            pdf_writer.addPage(text)
+            if save_file_pdf(pdf_writer, output_pdf_path) == 0:
+                print(f"Salvataggio completato!")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file PDF: {output_pdf_path}")
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_txt_path}: {e}")
+            return 1
 
 class TXTJPG:
     pass # TODO: Implementare la conversione di file TXT in JPG
