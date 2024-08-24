@@ -1,6 +1,8 @@
 from ai_model.ai_model_translate import UniversalTranslator
+from ai_model.ai_model_docx import DOCXPDF
 from utils.utils_file import load_file_txt, save_file_txt, save_file_pdf, save_file_docx
-from PyPDF2 import PdfReader, PdfWriter
+import os
+import shutil
 
 class TXTPDF:
     def __init__(self):
@@ -8,12 +10,17 @@ class TXTPDF:
 
     def convert(self, input_txt_path, output_pdf_path):
         try:
-            text = load_file_txt(input_txt_path)
-            if text == 1:
-                raise Exception(f"Errore durante il caricamento del file TXT: {input_txt_path}")
-            pdf_writer = PdfWriter()
-            pdf_writer.addPage(text)
-            if save_file_pdf(pdf_writer, output_pdf_path) == 0:
+            # Converti il file txt in docx utilizzando la classe TXTDOCX
+            txt_docx = TXTDOCX()
+            # Creazione del percorso del file temporaneo docx
+            output_docx_path = f'temp_file/{input_txt_path}.docx'
+            # Crea le cartelle necessarie
+            os.makedirs(os.path.dirname(output_docx_path), exist_ok=True)
+            if txt_docx.convert(input_txt_path, output_docx_path) == 1:
+                raise Exception(f"Errore durante la conversione del file {input_txt_path}")
+            # Converti il file docx in pdf utilizzando la classe DOCXPDF
+            docx_pdf = DOCXPDF()
+            if docx_pdf.convert(output_docx_path, output_pdf_path) == 0:
                 print(f"Salvataggio completato!")
                 return 0
             else:
@@ -21,6 +28,13 @@ class TXTPDF:
         except Exception as e:
             print(f"Errore durante la conversione del file {input_txt_path}: {e}")
             return 1
+        finally:
+            try:
+                # Elimina la cartella temporanea e tutto il suo contenuto
+                shutil.rmtree('temp_file')
+                print(f"Cartella temporanea eliminata: temp_file")
+            except Exception as e:
+                print(f"Errore durante l'eliminazione della cartella temporanea: temp_file. Dettagli: {e}")
 
 class TXTJPG:
     pass # TODO: Implementare la conversione di file TXT in JPG
