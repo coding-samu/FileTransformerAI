@@ -1,5 +1,5 @@
 from ai_model.ai_model_translate import UniversalTranslator
-from utils.utils_file import load_file_txt, save_file_txt, save_file_pdf
+from utils.utils_file import load_file_txt, save_file_txt, save_file_pdf, save_file_docx
 from PyPDF2 import PdfReader, PdfWriter
 
 class TXTPDF:
@@ -29,7 +29,22 @@ class TXTPNG:
     pass # TODO: Implementare la conversione di file TXT in PNG
 
 class TXTDOCX:
-    pass # TODO: Implementare la conversione di file TXT in DOCX
+    def __init__(self):
+        pass
+
+    def convert(self, input_txt_path, output_docx_path):
+        try:
+            text = load_file_txt(input_txt_path)
+            if text == 1:
+                raise Exception(f"Errore durante il caricamento del file TXT: {input_txt_path}")
+            if save_file_docx(text, output_docx_path) == 0:
+                print(f"Salvataggio completato!")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file DOCX: {output_docx_path}")
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_txt_path}: {e}")
+            return 1
 
 class TXTSpeech:
     pass # TODO: Implementare la conversione di file TXT in file audio
