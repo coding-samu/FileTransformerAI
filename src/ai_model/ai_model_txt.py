@@ -110,9 +110,9 @@ class TXTPNG:
             # Scrivi il testo nell'immagine
             y_text = 10  # Padding superiore
             for line in lines:
-                width, _ = draw.textsize(line, font=font)
+                width, height = draw.textsize(line, font=font)
                 draw.text(((max_width - width) / 2, y_text), line, font=font, fill="black")
-                y_text += line_height
+                y_text += height
 
             # Salva l'immagine come PNG
             img_byte_arr = io.BytesIO()
