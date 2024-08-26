@@ -100,7 +100,7 @@ class TXTPNG:
 
             # Calcola la larghezza massima e l'altezza totale del testo
             max_width = 800  # Larghezza massima dell'immagine
-            line_height = font.getsize('A')[1]  # Altezza della riga basata sul font
+            line_height = font.getbbox('A')[3]  # Altezza della riga basata sul font
             total_height = line_height * len(lines) + 20  # Altezza totale dell'immagine con padding
 
             # Crea l'immagine con le dimensioni calcolate
@@ -110,7 +110,7 @@ class TXTPNG:
             # Scrivi il testo nell'immagine
             y_text = 10  # Padding superiore
             for line in lines:
-                width, height = draw.textsize(line, font=font)
+                width, height = draw.textbbox((0, 0), line, font=font)[2:4]
                 draw.text(((max_width - width) / 2, y_text), line, font=font, fill="black")
                 y_text += height
 
