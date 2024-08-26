@@ -109,24 +109,36 @@ class TXTPNG:
 
             # Configurazione dell'immagine
             font = ImageFont.load_default()  # Usa il font di default
-            max_width, max_height = 800, 600  # Dimensioni massime dell'immagine
+            lines = text.split('\n')
+
+            # Calcola la larghezza massima e l'altezza totale del testo
+            max_width = 800  # Larghezza massima dell'immagine
+            total_height = 10  # Altezza iniziale (padding superiore)
+            line_heights = []
+
+            for line in lines:
+                bbox = ImageDraw.Draw(Image.new('RGB', (1, 1))).textbbox((0, 0), line, font=font)
+                width, height = bbox[2] - bbox[0], bbox[3] - bbox[1]
+                total_height += height
+                line_heights.append(height)
+
+            # Configura l'altezza totale dell'immagine
+            max_height = min(total_height, 600)  # Limita l'altezza massima a 600
+
+            # Crea l'immagine con le dimensioni calcolate
             image = Image.new('RGB', (max_width, max_height), color='white')
             draw = ImageDraw.Draw(image)
 
-            # Calcola le dimensioni del testo usando textbbox
-            lines = text.split('\n')
-            y_text = 10  # Iniziare a disegnare il testo dall'alto
-
-            for line in lines:
+            # Scrivi il testo nell'immagine
+            y_text = 10
+            for line, height in zip(lines, line_heights):
                 bbox = draw.textbbox((0, 0), line, font=font)
-                width, height = bbox[2] - bbox[0], bbox[3] - bbox[1]
-                if y_text + height > max_height:
-                    break  # Se il testo supera l'altezza dell'immagine, smetti di aggiungere testo
+                width = bbox[2] - bbox[0]
                 draw.text(((max_width - width) / 2, y_text), line, font=font, fill="black")
                 y_text += height
 
             # Ridimensiona l'immagine al contenuto
-            image = image.crop((0, 0, max_width, y_text))
+            image = image.crop((0, 0, max_width, min(y_text, max_height)))
 
             # Salva l'immagine come PNG
             img_byte_arr = io.BytesIO()
