@@ -54,32 +54,19 @@ class TXTJPG:
 
             # Calcola la larghezza massima e l'altezza totale del testo
             max_width = 800  # Larghezza massima dell'immagine
-            total_height = 10  # Altezza iniziale (padding superiore)
-            line_heights = []
-
-            for line in lines:
-                bbox = ImageDraw.Draw(Image.new('RGB', (1, 1))).textbbox((0, 0), line, font=font)
-                width, height = bbox[2] - bbox[0], bbox[3] - bbox[1]
-                total_height += height
-                line_heights.append(height)
-
-            # Configura l'altezza totale dell'immagine
-            max_height = min(total_height, 600)  # Limita l'altezza massima a 600
+            line_height = font.getsize('A')[1]  # Altezza della riga basata sul font
+            total_height = line_height * len(lines) + 20  # Altezza totale dell'immagine con padding
 
             # Crea l'immagine con le dimensioni calcolate
-            image = Image.new('RGB', (max_width, max_height), color='white')
+            image = Image.new('RGB', (max_width, total_height), color='white')
             draw = ImageDraw.Draw(image)
 
             # Scrivi il testo nell'immagine
-            y_text = 10
-            for line, height in zip(lines, line_heights):
-                bbox = draw.textbbox((0, 0), line, font=font)
-                width = bbox[2] - bbox[0]
+            y_text = 10  # Padding superiore
+            for line in lines:
+                width, _ = draw.textsize(line, font=font)
                 draw.text(((max_width - width) / 2, y_text), line, font=font, fill="black")
-                y_text += height
-
-            # Ridimensiona l'immagine al contenuto
-            image = image.crop((0, 0, max_width, min(y_text, max_height)))
+                y_text += line_height
 
             # Salva l'immagine come JPG
             img_byte_arr = io.BytesIO()
