@@ -101,12 +101,13 @@ class TXTPNG:
             image = Image.new('RGB', (max_width, max_height), color='white')
             draw = ImageDraw.Draw(image)
 
-            # Calcola le dimensioni del testo
+            # Calcola le dimensioni del testo usando textbbox
             lines = text.split('\n')
             y_text = 10  # Iniziare a disegnare il testo dall'alto
 
             for line in lines:
-                width, height = draw.textsize(line, font=font)
+                bbox = draw.textbbox((0, 0), line, font=font)
+                width, height = bbox[2] - bbox[0], bbox[3] - bbox[1]
                 if y_text + height > max_height:
                     break  # Se il testo supera l'altezza dell'immagine, smetti di aggiungere testo
                 draw.text(((max_width - width) / 2, y_text), line, font=font, fill="black")
