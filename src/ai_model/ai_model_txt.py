@@ -5,6 +5,7 @@ import os
 import shutil
 import io
 from PIL import Image, ImageDraw, ImageFont
+from transformers import BartTokenizer, BartForConditionalGeneration
 
 class TXTPDF:
     def __init__(self):
@@ -171,7 +172,42 @@ class TXTTranslate:
             return 1
         
 class TXTSummary:
-    pass # TODO: Implementare la generazione di riassunti da file TXT
+    def __init__(self):
+        # Inizializza il modello e il tokenizer per il riassunto
+        self.tokenizer = BartTokenizer.from_pretrained("facebook/bart-large-cnn")
+        self.model = BartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn")
+
+    def convert(self, input_txt_path, output_txt_path):
+        try:
+            # Carica il file TXT
+            text = load_file_txt(input_txt_path)
+
+            # Preprocessa il testo per il modello
+            inputs = self.tokenizer(text, return_tensors="pt", max_length=1024, truncation=True)
+
+            # Genera il riassunto
+            summary_ids = self.model.generate(
+                inputs["input_ids"],
+                max_length=150,
+                min_length=0,
+                length_penalty=2.0,
+                num_beams=4,
+                early_stopping=True
+            )
+
+            # Decodifica il riassunto generato
+            summary = self.tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+
+            # Salva il riassunto nel file TXT
+            if save_file_txt(summary, output_txt_path) == 0:
+                print(f"Riassunto completato e salvato in: {output_txt_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file TXT: {output_txt_path}")
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_txt_path}: {e}")
+            return 1
 
 class TXTImageGen:
     pass # TODO: Implementare la generazione di immagini da file TXT
