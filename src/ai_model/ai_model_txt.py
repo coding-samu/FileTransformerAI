@@ -1,6 +1,6 @@
 from ai_model.ai_model_translate import UniversalTranslator
 from ai_model.ai_model_docx import DOCXPDF
-from utils.utils_file import load_file_txt, save_file_txt, save_file_pdf, save_file_docx, save_file_jpg
+from utils.utils_file import load_file_txt, save_file_txt, save_file_pdf, save_file_docx, save_file_jpg, save_file_png
 import os
 import shutil
 import io
@@ -85,7 +85,50 @@ class TXTJPG:
             return 1
 
 class TXTPNG:
-    pass # TODO: Implementare la conversione di file TXT in PNG
+    def __init__(self):
+        pass
+
+    def convert(self, input_txt_path, output_png_path):
+        try:
+            # Carica il contenuto del file TXT
+            with open(input_txt_path, 'r', encoding='utf-8') as file:
+                text = file.read()
+
+            # Configurazione dell'immagine
+            font = ImageFont.load_default()  # Usa il font di default
+            max_width, max_height = 800, 600  # Dimensioni massime dell'immagine
+            image = Image.new('RGB', (max_width, max_height), color='white')
+            draw = ImageDraw.Draw(image)
+
+            # Calcola le dimensioni del testo
+            lines = text.split('\n')
+            y_text = 10  # Iniziare a disegnare il testo dall'alto
+
+            for line in lines:
+                width, height = draw.textsize(line, font=font)
+                if y_text + height > max_height:
+                    break  # Se il testo supera l'altezza dell'immagine, smetti di aggiungere testo
+                draw.text(((max_width - width) / 2, y_text), line, font=font, fill="black")
+                y_text += height
+
+            # Ridimensiona l'immagine al contenuto
+            image = image.crop((0, 0, max_width, y_text))
+
+            # Salva l'immagine come PNG
+            img_byte_arr = io.BytesIO()
+            image.save(img_byte_arr, format='PNG')
+            img_data = img_byte_arr.getvalue()
+
+            # Usa la funzione save_file_png per salvare il file
+            if save_file_png(img_data, output_png_path) == 0:
+                print(f"Conversione completata: {output_png_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file PNG: {output_png_path}")
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_txt_path}: {e}")
+            return 1
 
 class TXTDOCX:
     def __init__(self):
