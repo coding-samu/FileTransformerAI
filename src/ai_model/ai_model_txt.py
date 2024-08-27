@@ -7,6 +7,9 @@ import io
 from PIL import Image, ImageDraw, ImageFont
 from transformers import BartTokenizer, BartForConditionalGeneration
 
+import torch
+from diffusers import StableDiffusionPipeline
+
 class TXTPDF:
     def __init__(self):
         pass
@@ -210,7 +213,54 @@ class TXTSummary:
             return 1
 
 class TXTImageGen:
-    pass # TODO: Implementare la generazione di immagini da file TXT
+    def __init__(self, model_name="stabilityai/stable-diffusion-2-1", safety_checker=True):
+        try:
+            print("Caricamento del modello di generazione immagini (questa operazione potrebbe richiedere diversi minuti)...")
+            
+            # Inizializza la pipeline di Stable Diffusion
+            self.pipe = StableDiffusionPipeline.from_pretrained(
+                model_name,
+                torch_dtype=torch.float32
+            )
+            
+            # Disabilita il safety checker se necessario
+            if not safety_checker:
+                self.pipe.safety_checker = lambda images, **kwargs: (images, False)
+            
+            # Imposta la pipeline sulla CPU
+            self.pipe = self.pipe.to("cpu")
+            
+            print("Modello caricato correttamente sulla CPU.")
+        except Exception as e:
+            print(f"Errore durante il caricamento del modello: {e}")
+            raise
+
+    def convert(self, input_txt_path, output_img_path, num_inference_steps=50, guidance_scale=7.5):
+        try:
+            # Carica la descrizione dal file di testo
+            description = load_file_txt(input_txt_path).strip()
+            if not description:
+                raise ValueError("Il file di testo di input è vuoto.")
+            
+            print(f"Descrizione caricata: {description}")
+            print("Inizio generazione dell'immagine (questo potrebbe richiedere diversi minuti)...")
+            
+            # Genera l'immagine
+            with torch.no_grad():
+                output = self.pipe(
+                    description,
+                    num_inference_steps=num_inference_steps,
+                    guidance_scale=guidance_scale
+                )
+                image = output.images[0]
+            
+            # Salva l'immagine
+            save_file_jpg(image, output_img_path)
+            print(f"Immagine generata e salvata in: {output_img_path}")
+            return 0
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_txt_path}: {e}")
+            return 1
 
 class TXTWrite:
     pass # TODO: Implementare la scrittura di testo in file TXT

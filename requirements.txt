@@ -6,6 +6,10 @@ sentencepiece
 protobuf
 opencv-python
 datasets
+diffusers
+
+# cpu
+accelerate
 
 # Elaborazione di immagini
 Pillow
