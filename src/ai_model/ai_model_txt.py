@@ -261,10 +261,10 @@ class TXTImageGen:
             img_byte_arr = img_byte_arr.getvalue()
             
             # Salva l'immagine utilizzando save_file_jpg
-            result = save_file_jpg(img_byte_arr, output_img_path)
-            if result == 0:
+            if save_file_jpg(img_byte_arr, output_img_path) == 0:
                 print(f"Immagine generata e salvata in: {output_img_path}")
-            return result
+            else:
+                raise Exception(f"Errore durante il salvataggio dell'immagine: {output_img_path}")
         except Exception as e:
             print(f"Errore durante la conversione del file {input_txt_path}: {e}")
             return 1
