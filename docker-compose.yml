@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  aiconvertor:
+  filetransformerai:
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,8 +17,8 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - aiconvertor_network
+      - filetransformerai_network
 
 networks:
-  aiconvertor_network:
+  filetransformerai_network:
     driver: bridge
