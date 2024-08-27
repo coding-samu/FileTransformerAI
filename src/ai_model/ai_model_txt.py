@@ -6,6 +6,7 @@ import shutil
 import io
 from PIL import Image, ImageDraw, ImageFont
 from transformers import BartTokenizer, BartForConditionalGeneration
+from io import BytesIO
 
 import torch
 from diffusers import StableDiffusionPipeline
@@ -254,10 +255,16 @@ class TXTImageGen:
                 )
                 image = output.images[0]
             
-            # Salva l'immagine
-            save_file_jpg(image, output_img_path)
-            print(f"Immagine generata e salvata in: {output_img_path}")
-            return 0
+            # Converti l'immagine in formato bytes-like
+            img_byte_arr = BytesIO()
+            image.save(img_byte_arr, format='JPEG')
+            img_byte_arr = img_byte_arr.getvalue()
+            
+            # Salva l'immagine utilizzando save_file_jpg
+            result = save_file_jpg(img_byte_arr, output_img_path)
+            if result == 0:
+                print(f"Immagine generata e salvata in: {output_img_path}")
+            return result
         except Exception as e:
             print(f"Errore durante la conversione del file {input_txt_path}: {e}")
             return 1
