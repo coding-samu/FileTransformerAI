@@ -263,6 +263,7 @@ class TXTImageGen:
             # Salva l'immagine utilizzando save_file_jpg
             if save_file_jpg(img_byte_arr, output_img_path) == 0:
                 print(f"Immagine generata e salvata in: {output_img_path}")
+                return 0
             else:
                 raise Exception(f"Errore durante il salvataggio dell'immagine: {output_img_path}")
         except Exception as e:
