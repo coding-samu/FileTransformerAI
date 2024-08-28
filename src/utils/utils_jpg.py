@@ -15,7 +15,7 @@ def get_jpg_model(conversion_type, input_file):
             return 1
         
 def get_type_conversion():
-    print("Come desideri convertire il file JPG? (pdf, png, txt): ")
+    print("Come desideri convertire il file JPG? (pdf, png, txt, alttext): ")
     return input()
 
 def jpg_to_pdf(input_file):
