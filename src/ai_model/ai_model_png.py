@@ -121,3 +121,22 @@ class PNGTXT:
         except Exception as e:
             print(f"Errore durante la conversione del file {input_png_path}: {e}")
             return 1
+        
+class PNGAltText:
+    def __init__(self):
+        pass
+
+    def convert(self, input_png_path):
+        try:
+            # Carica il file PNG utilizzando la funzione load_file_png
+            img_data = load_file_png(input_png_path)
+            if img_data is None:
+                raise Exception(f"Errore nel caricamento del file PNG: {input_png_path}")
+
+            # TODO: Implementare l'estrazione dell'alt text dall'immagine
+
+            return 0
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_png_path}: {e}")
+            return None
