@@ -15,7 +15,7 @@ def get_png_model(conversion_type, input_file):
             return 1
         
 def get_type_conversion():
-    print("Come desideri convertire il file PNG? (pdf, jpg, txt): ")
+    print("Come desideri convertire il file PNG? (pdf, jpg, txt, alttext): ")
     return input()
 
 def png(input_file):
