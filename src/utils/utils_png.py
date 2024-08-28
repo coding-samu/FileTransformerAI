@@ -11,8 +11,7 @@ def get_png_model(conversion_type, input_file):
         case "txt":
             return png_to_txt(input_file)
         case "alttext":
-            print("Conversione alttext non ancora supportata.")
-            return 1
+            return png_alttext(input_file)
         case _:
             print("Tipo di conversione non supportato.")
             return 1
