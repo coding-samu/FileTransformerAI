@@ -42,6 +42,7 @@ openpyxl
 librosa
 soundfile
 pydub
+TTS
 
 # Test e validazione
 pytest

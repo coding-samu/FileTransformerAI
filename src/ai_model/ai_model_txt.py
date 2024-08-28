@@ -8,6 +8,8 @@ from PIL import Image, ImageDraw, ImageFont
 from transformers import BartTokenizer, BartForConditionalGeneration
 from io import BytesIO
 
+from TTS.api import TTS
+
 import torch
 from diffusers import StableDiffusionPipeline
 
@@ -154,7 +156,37 @@ class TXTDOCX:
             return 1
 
 class TXTSpeech:
-    pass # TODO: Implementare la conversione di file TXT in file audio
+    def __init__(self):
+        # Mappa delle lingue supportate e i loro modelli
+        self.language_map = {
+            "en": "tts_models/en/ljspeech/tacotron2-DDC",
+            "it": "tts_models/it/mai_female/glow-tts",
+            "es": "tts_models/es/mai_female/glow-tts",
+            "fr": "tts_models/fr/mai_female/glow-tts",
+            "de": "tts_models/de/thorsten/tacotron2-DDC"
+        }
+
+    def convert(self, input_txt_path, output_audio_path, lang_code):
+        try:
+            # Verifica se la lingua è supportata
+            if lang_code not in self.language_map:
+                raise ValueError(f"Lingua non supportata: {lang_code}")
+
+            # Carica il file di testo
+            with open(input_txt_path, "r", encoding="utf-8") as file:
+                text = file.read()
+
+            # Inizializza il modello
+            tts = TTS(self.language_map[lang_code])
+
+            # Genera il parlato e salva il file
+            tts.tts_to_file(text=text, file_path=output_audio_path)
+            print(f"Conversione completata e salvata in: {output_audio_path}")
+            return 0
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_txt_path}: {e}")
+            return 1
 
 class TXTTranslate:
     def __init__(self, source_language, target_language):
