@@ -1,6 +1,6 @@
 from ai_model.ai_model_translate import UniversalTranslator
 from ai_model.ai_model_docx import DOCXPDF
-from utils.utils_file import load_file_txt, save_file_txt, save_file_pdf, save_file_docx, save_file_jpg, save_file_png
+from utils.utils_file import load_file_txt, save_file_txt, save_file_docx, save_file_jpg, save_file_png
 import os
 import shutil
 import io
