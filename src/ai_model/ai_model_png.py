@@ -5,6 +5,9 @@ import io
 import pytesseract
 from PyPDF2 import PdfWriter, PdfReader
 
+import torch
+from transformers import BlipProcessor, BlipForConditionalGeneration
+
 class PNGPDF:
     def __init__(self):
         pass
@@ -124,19 +127,29 @@ class PNGTXT:
         
 class PNGAltText:
     def __init__(self):
-        pass
+        # Inizializza il processore e il modello BLIP per la generazione di descrizioni testuali
+        self.processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+        self.model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
-    def convert(self, input_png_path):
+    def convert(self, input_png_path, output_txt_path):
         try:
-            # Carica il file PNG utilizzando la funzione load_file_png
-            img_data = load_file_png(input_png_path)
-            if img_data is None:
-                raise Exception(f"Errore nel caricamento del file PNG: {input_png_path}")
+            # Carica l'immagine
+            image = Image.open(input_png_path).convert("RGB")
 
-            # TODO: Implementare l'estrazione dell'alt text dall'immagine
+            # Preprocessa l'immagine e preparala per il modello
+            inputs = self.processor(image, return_tensors="pt")
 
-            return 0
+            # Genera la didascalia (alt text) per l'immagine
+            caption_ids = self.model.generate(**inputs)
+            caption = self.processor.decode(caption_ids[0], skip_special_tokens=True)
+
+            # Salva la didascalia nel file di output
+            if save_file_txt(caption, output_txt_path) == 0:
+                print(f"Alt text generato e salvato in: {output_txt_path}")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file TXT: {output_txt_path}")
 
         except Exception as e:
             print(f"Errore durante la conversione del file {input_png_path}: {e}")
-            return None
+            return 1
