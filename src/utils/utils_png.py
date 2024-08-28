@@ -10,6 +10,9 @@ def get_png_model(conversion_type, input_file):
             return png_to_jpg(input_file)
         case "txt":
             return png_to_txt(input_file)
+        case "alttext":
+            print("Conversione alttext non ancora supportata.")
+            return 1
         case _:
             print("Tipo di conversione non supportato.")
             return 1
