@@ -1,4 +1,4 @@
-from ai_model.ai_model_txt import TXTPDF, TXTJPG, TXTPNG, TXTDOCX, TXTSpeech, TXTTranslate, TXTSummary, TXTImageGen, TXTWrite
+from ai_model.ai_model_txt import TXTPDF, TXTJPG, TXTPNG, TXTDOCX, TXTSpeech, TXTTranslate, TXTSummary, TXTImageGen, TXTWrite, TXTGTTS
 from utils.utils_translate import get_languages
 
 import os
@@ -15,6 +15,8 @@ def get_txt_model(conversion_type, input_file):
             return txt_to_docx(input_file)
         case "tts":
             return txt_to_speech(input_file)
+        case "gtts":
+            return gtts(input_file)
         case "translate":
             return txt_to_translate(input_file)
         case "summary":
@@ -28,7 +30,7 @@ def get_txt_model(conversion_type, input_file):
             return 1
         
 def get_type_conversion():
-    print("Come desideri convertire il file TXT? (pdf, jpg, png, docx, tts, translate, summary, imagegen, write): ")
+    print("Come desideri convertire il file TXT? (pdf, jpg, png, docx, tts, gtts, translate, summary, imagegen, write): ")
     return input()
 
 def txt(input_file):
@@ -95,6 +97,18 @@ def txt_to_speech(input_file):
     try:
         lang = input("Inserisci la lingua del testo (lingue supportate: en, it, es, fr, de): ")
         txt_speech = TXTSpeech()
+        # Rimuovi l'estensione esistente dal file di input
+        base_name = os.path.splitext(input_file)[0]
+        txt_speech.convert(f'input_files/{input_file}',f'output_files/{base_name}.mp3',lang)
+        return 0
+    except Exception as e:
+        print(f"Errore durante la conversione del file {input_file}: {e}")
+        return 1
+    
+def gtts(input_file):
+    try:
+        lang = input("Inserisci la lingua del testo (es. en, it, es, de, fr): ")
+        txt_speech = TXTGTTS()
         # Rimuovi l'estensione esistente dal file di input
         base_name = os.path.splitext(input_file)[0]
         txt_speech.convert(f'input_files/{input_file}',f'output_files/{base_name}.mp3',lang)

@@ -13,6 +13,8 @@ from TTS.api import TTS
 import torch
 from diffusers import StableDiffusionPipeline
 
+from gtts import gTTS
+
 class TXTPDF:
     def __init__(self):
         pass
@@ -304,3 +306,23 @@ class TXTImageGen:
 
 class TXTWrite:
     pass # TODO: Implementare la scrittura di testo in file TXT
+
+class TXTGTTS:
+    def __init__(self):
+        pass
+
+    def convert(self, input_txt_path, output_audio_path, lang_code):
+        try:
+            # Carica il file di testo
+            with open(input_txt_path, "r", encoding="utf-8") as file:
+                text = file.read()
+
+            # Genera il parlato
+            tts = gTTS(text=text, lang=lang_code)
+            tts.save(output_audio_path)
+            print(f"Conversione completata e salvata in: {output_audio_path}")
+            return 0
+
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_txt_path}: {e}")
+            return 1

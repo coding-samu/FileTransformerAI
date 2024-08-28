@@ -43,6 +43,7 @@ librosa
 soundfile
 pydub
 TTS
+gtts
 
 # Test e validazione
 pytest
