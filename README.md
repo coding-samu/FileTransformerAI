@@ -1,6 +1,6 @@
 # FileTransformerAI
 
-FileTransformerAI is a Python project that utilizes Docker to transform files. It allows you to convert files from one extension to another or perform more sophisticated transformations using AI, such as translation, image generation from text (to do), audio transcription (to do) or text-to-speech (to do).
+FileTransformerAI is a Python project that utilizes Docker to transform files. It allows you to convert files from one extension to another or perform more sophisticated transformations using AI, such as translation, image generation from text, audio transcription (to do) or text-to-speech (to do).
 
 ## Getting Started
 
