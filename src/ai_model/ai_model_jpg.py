@@ -118,3 +118,22 @@ class JPGTXT:
         except Exception as e:
             print(f"Errore durante la conversione del file {input_jpg_path}: {e}")
             return 1
+        
+class JPGAltText:
+    def __init__(self):
+        pass
+
+    def convert(self, input_jpg_path):
+        try:
+            # Carica il file JPG utilizzando la funzione load_file_jpg
+            img_data = load_file_jpg(input_jpg_path)
+            if img_data is None:
+                raise Exception(f"Errore nel caricamento del file JPG: {input_jpg_path}")
+
+            # TODO: Implementare l'estrazione dell'alt text dall'immagine
+
+            return 0
+
+        except Exception as e:
+            print(f"Errore durante l'estrazione del testo dall'immagine {input_jpg_path}: {e}")
+            return 1
