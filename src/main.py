@@ -4,6 +4,7 @@ from utils.utils_jpg import jpg
 from utils.utils_png import png
 from utils.utils_docx import docx
 from utils.utils_xlsx import xlsx
+from utils.utils_mp3 import mp3
 
 def main():
     while True:
@@ -30,9 +31,8 @@ def main():
                 error = docx(input_file)
             case "xlsx":
                 error = xlsx(input_file)
-            case "audio":
-                print("Conversione audio non ancora supportata.")
-                continue # TODO: Implementare la conversione di file audio
+            case "mp3":
+                error = mp3(input_file)
             case _:
                 print("Tipo di conversione non supportato.")
                 continue
