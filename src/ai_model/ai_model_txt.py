@@ -15,6 +15,8 @@ from diffusers import StableDiffusionPipeline
 
 from gtts import gTTS
 
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
 class TXTPDF:
     def __init__(self):
         pass
@@ -305,15 +307,33 @@ class TXTImageGen:
             return 1
 
 class TXTWrite:
-    def __init__(self):
-        pass
+    def __init__(self, model_name='gpt2'):
+        # Carica il modello e il tokenizer
+        self.tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+        self.model = GPT2LMHeadModel.from_pretrained(model_name)
+        self.model.eval()
+
+    def generate_text(self, input_text, max_length=100):
+        # Tokenizza il testo di input
+        input_ids = self.tokenizer.encode(input_text, return_tensors='pt')
+
+        # Genera il testo
+        with torch.no_grad():
+            output = self.model.generate(input_ids, max_length=max_length, num_return_sequences=1)
+
+        # Decodifica il testo generato
+        generated_text = self.tokenizer.decode(output[0], skip_special_tokens=True)
+        return generated_text
 
     def convert(self, input_txt_path, output_txt_path):
         try:
             text = load_file_txt(input_txt_path)
-            # TODO: Implementare la generazione di testo partendo dall'argomento fornito in text
+            
+            # Genera il testo approfondito
+            generated_text = self.generate_text(text, max_length=200)
+            
             # Salva il file TXT
-            if save_file_txt(text, output_txt_path) == 0:
+            if save_file_txt(generated_text, output_txt_path) == 0:
                 print(f"Salvataggio completato!")
                 return 0
             else:
