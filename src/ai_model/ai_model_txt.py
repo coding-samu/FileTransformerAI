@@ -330,7 +330,7 @@ class TXTWrite:
             text = load_file_txt(input_txt_path)
             
             # Genera il testo approfondito
-            generated_text = self.generate_text(text, max_length=200)
+            generated_text = self.generate_text(text, max_length=200) # TODO: Sistemare la funzione, non funziona correttamente (genera una sola frase e la ripete per riempire il limite di parole)
             
             # Salva il file TXT
             if save_file_txt(generated_text, output_txt_path) == 0:
