@@ -305,7 +305,22 @@ class TXTImageGen:
             return 1
 
 class TXTWrite:
-    pass # TODO: Implementare la scrittura di testo in file TXT
+    def __init__(self):
+        pass
+
+    def convert(self, input_txt_path, output_txt_path):
+        try:
+            text = load_file_txt(input_txt_path)
+            # TODO: Implementare la generazione di testo partendo dall'argomento fornito in text
+            # Salva il file TXT
+            if save_file_txt(text, output_txt_path) == 0:
+                print(f"Salvataggio completato!")
+                return 0
+            else:
+                raise Exception(f"Errore durante il salvataggio del file TXT: {output_txt_path}")
+        except Exception as e:
+            print(f"Errore durante la conversione del file {input_txt_path}: {e}")
+            return 1
 
 class TXTGTTS:
     def __init__(self):
