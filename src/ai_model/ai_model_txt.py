@@ -313,13 +313,22 @@ class TXTWrite:
         self.model = GPT2LMHeadModel.from_pretrained(model_name)
         self.model.eval()
 
-    def generate_text(self, input_text, max_length=100):
+    def generate_text(self, input_text, max_length=200, temperature=0.7, top_k=50, top_p=0.9):
         # Tokenizza il testo di input
         input_ids = self.tokenizer.encode(input_text, return_tensors='pt')
 
-        # Genera il testo
+        # Genera il testo utilizzando tecniche avanzate di sampling
         with torch.no_grad():
-            output = self.model.generate(input_ids, max_length=max_length, num_return_sequences=1)
+            output = self.model.generate(
+                input_ids,
+                max_length=max_length,
+                temperature=temperature,
+                top_k=top_k,
+                top_p=top_p,
+                num_return_sequences=1,
+                repetition_penalty=1.2,
+                no_repeat_ngram_size=2
+            )
 
         # Decodifica il testo generato
         generated_text = self.tokenizer.decode(output[0], skip_special_tokens=True)
@@ -327,14 +336,15 @@ class TXTWrite:
 
     def convert(self, input_txt_path, output_txt_path):
         try:
+            # Carica il testo dal file di input
             text = load_file_txt(input_txt_path)
             
-            # Genera il testo approfondito
-            generated_text = self.generate_text(text, max_length=200) # TODO: Sistemare la funzione, non funziona correttamente (genera una sola frase e la ripete per riempire il limite di parole)
+            # Genera un testo approfondito basato sull'argomento
+            generated_text = self.generate_text(text, max_length=1000)
             
-            # Salva il file TXT
+            # Salva il testo generato in un file di output
             if save_file_txt(generated_text, output_txt_path) == 0:
-                print(f"Salvataggio completato!")
+                print(f"Salvataggio completato in: {output_txt_path}")
                 return 0
             else:
                 raise Exception(f"Errore durante il salvataggio del file TXT: {output_txt_path}")
